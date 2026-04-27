@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slate-50: #fafaf9;
+  --color-slate-100: #f5f2f0;
+  --color-slate-200: #e7e2df;
+  --color-slate-300: #d6cfca;
+  --color-slate-400: #b5ada8;
+  --color-slate-500: #8c837d;
+  --color-slate-600: #6b635e;
+  --color-slate-700: #4a4440;
+  --color-slate-800: #292421;
+  --color-slate-900: #141211;
+  
+  /* Primary Brown (Blue) - Terracotta/Sienna tones */
+  --color-blue-50: #fdf8f6;
+  --color-blue-100: #f2e8e5;
+  --color-blue-200: #eaddd7;
+  --color-blue-300: #d1bba2;
+  --color-blue-400: #a67c52;
+  --color-blue-500: #8c5d3a;
+  --color-blue-600: #734a31;
+  --color-blue-700: #5a3a27;
+  --color-blue-800: #412a1d;
+  --color-blue-900: #291a13;
+
+  /* Secondary Brown (Indigo) - Muddy/Earth tones */
+  --color-indigo-50: #fcfaf9;
+  --color-indigo-100: #f5f1ef;
+  --color-indigo-200: #ebe3df;
+  --color-indigo-300: #d7ccc8;
+  --color-indigo-400: #bcaaa4;
+  --color-indigo-500: #8d6e63;
+  --color-indigo-600: #795548;
+  --color-indigo-700: #6d4c41;
+  --color-indigo-800: #5d4037;
+  --color-indigo-900: #4e342e;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
