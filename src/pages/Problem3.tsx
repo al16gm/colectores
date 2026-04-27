@@ -200,8 +200,8 @@ export default function Problem3() {
             <div className="bg-white p-6 rounded-2xl border border-slate-100 space-y-4">
                 <h3 className="font-bold text-slate-800">Propiedades de la Sección</h3>
                 <div className="text-sm text-slate-600 space-y-2">
-                    <p className="flex justify-between"><span>Radio Hidráulico (Rh,ll):</span> <span className="font-mono">{(solution.full?.RH || 0).toFixed(3)} m</span></p>
-                    <p className="flex justify-between"><span>Área Lleno (S,ll):</span> <span className="font-mono">{(solution.full?.area || 0).toFixed(3)} m²</span></p>
+                    <p className="flex justify-between"><span>Radio Hidráulico (Rh,ll):</span> <span className="font-mono">{(solution.full?.radiusHydraulicFull || 0).toFixed(3)} m</span></p>
+                    <p className="flex justify-between"><span>Área Lleno (S,ll):</span> <span className="font-mono">{(solution.full?.areaFull || 0).toFixed(3)} m²</span></p>
                     <p className="flex justify-between"><span>Velocidad Llena (Vll):</span> <span className="font-mono">{(solution.full?.vFull || 0).toFixed(3)} m/s</span></p>
                 </div>
             </div>
@@ -209,7 +209,7 @@ export default function Problem3() {
                <HydraulicChart 
                  type="ovoid"
                  currentYOverD={solution.yOverD}
-                 currentVOverVllu={solution.vReal / (solution.full?.vFull || 1)}
+                 currentVOverVllu={solution.vMax / (solution.full?.vFull || 1)}
                  currentQOverQllu={solution.qRatio}
                />
             </div>
@@ -231,7 +231,7 @@ export default function Problem3() {
           description: `Para un ovoide de altura H=${params.selected_height_cm}cm, calculamos sus propiedades geométricas y capacidad máxima mediante Manning.`,
           formula: "Q_ll = (1/n) · A · Rh^(2/3) · J^(1/2)",
           calcLabel: "Cálculo de Capacidad Máxima",
-          calculation: `Q_ll = (1/${params.n}) · ${(solution.full?.area || 0).toFixed(3)} · ${(solution.full?.RH || 0).toFixed(3)}^(2/3) · ${params.j}^(1/2)`,
+          calculation: `Q_ll = (1/${params.n}) · ${(solution.full?.areaFull || 0).toFixed(3)} · ${(solution.full?.radiusHydraulicFull || 0).toFixed(3)}^(2/3) · ${params.j}^(1/2)`,
           result: `${(solution.full?.qFull || 0).toFixed(3)} m³/s | V_ll: ${(solution.full?.vFull || 0).toFixed(2)} m/s`
         },
         {
@@ -240,7 +240,7 @@ export default function Problem3() {
           formula: "q = Q_total / Q_ll",
           calcLabel: "Interpolación Ovoidal",
           calculation: `q = ${(solution.q_max_total_m3 || 0).toFixed(3)} / ${(solution.full?.qFull || 0).toFixed(3)} = ${(solution.qRatio || 0).toFixed(3)}`,
-          result: `y/H = ${(solution.yOverD || 0).toFixed(3)} | v/vll = ${(solution.vReal / (solution.full?.vFull || 1)).toFixed(3)}`
+          result: `y/H = ${(solution.yOverD || 0).toFixed(3)} | v/vll = ${(solution.vMax / (solution.full?.vFull || 1)).toFixed(3)}`
         },
         {
           title: "4. Comprobación de Resultados",
