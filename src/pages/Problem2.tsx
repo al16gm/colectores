@@ -54,19 +54,28 @@ export default function Problem2() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <TrendingUp className="w-4 h-4" />
-          Ejercicio 2
+          Módulo práctico
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Dimensionamiento Colector Urbano</h1>
-        <p className="text-slate-600 mt-2">Cálculo de caudales residuales y pluviales (Actual y Horizonte 25 años).</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Verificación hidráulica de colector urbano</h1>
+        <p className="text-slate-600 mt-2">Evaluación de un colector urbano en situación actual y horizonte de diseño.</p>
       </header>
+
+      <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+        <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
+          Qué se pretende en este módulo
+        </p>
+        <p className="text-sm text-blue-900 font-medium leading-relaxed">
+          Evaluar el comportamiento actual y futuro de un colector urbano considerando caudales residuales, caudales pluviales y horizonte de diseño.
+        </p>
+      </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
-            <h2 className="text-lg font-bold text-slate-800 border-b pb-4">Caudales de Diseño (m³/s)</h2>
+            <h2 className="text-lg font-bold text-slate-800 border-b pb-4">Datos de entrada: Caudales de Diseño (m³/s)</h2>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
-                <p className="text-xs font-black text-blue-600 uppercase">Año Actual</p>
+                <p className="text-xs font-black text-blue-600 uppercase">Situación actual</p>
                 <div className="space-y-2">
                   <label className="text-[10px] text-slate-400 uppercase">Q Medio</label>
                   <input type="number" step="0.01" value={data.q_med_actual} onChange={e => setData({...data, q_med_actual: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
@@ -77,7 +86,7 @@ export default function Problem2() {
                 </div>
               </div>
               <div className="space-y-4">
-                <p className="text-xs font-black text-indigo-600 uppercase">Horizonte +25 Años</p>
+                <p className="text-xs font-black text-indigo-600 uppercase">Horizonte de diseño (+25 años)</p>
                 <div className="space-y-2">
                   <label className="text-[10px] text-slate-400 uppercase">Q Punta (Qp)</label>
                   <input type="number" step="0.01" value={data.q_p_25} onChange={e => setData({...data, q_p_25: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
@@ -91,7 +100,7 @@ export default function Problem2() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Parámetros del Colector</h2>
+            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Parámetros del Colector</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-[10px] text-slate-400 uppercase">Diámetro (mm)</label>
@@ -107,12 +116,12 @@ export default function Problem2() {
 
         <section className="space-y-6">
           <div className={`p-6 rounded-2xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-blue-500' : 'bg-white border-t-orange-500'}`}>
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Balance Normativo</h3>
+            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
             
             <div className="space-y-6">
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Autolimpieza (Actual Min)</span>
+                    <span>Caudal mínimo actual</span>
                     <span className={(solution.vMin || 0) >= 0.6 ? 'text-green-600' : 'text-orange-600'}>{(solution.vMin || 0).toFixed(2)} / 0.60 m/s</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -122,7 +131,7 @@ export default function Problem2() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Velocidad Punta (N+25)</span>
+                    <span>Caudal punta futuro</span>
                     <span className={(solution.vP || 0) <= 3.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.vP || 0).toFixed(2)} / 3.00 m/s</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -132,7 +141,7 @@ export default function Problem2() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Velocidad Máxima (Qtotal)</span>
+                    <span>Caudal total futuro</span>
                     <span className={(solution.vMax || 0) <= 5.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.vMax || 0).toFixed(2)} / 5.00 m/s</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -142,7 +151,7 @@ export default function Problem2() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Llenado Máximo (Qtotal)</span>
+                    <span>Llenado máximo (Qtotal)</span>
                     <span className={(solution.yOverDMax || 0) <= 1.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.yOverDMax || 0).toFixed(3)} / 1.00</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -151,8 +160,8 @@ export default function Problem2() {
                 </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-100 italic text-[10px] text-slate-400 text-center">
-                * Criterios basados en normativas de saneamiento urbano para colectores unitarios.
+            <div className="mt-8 pt-6 border-t border-slate-100 italic text-[10px] text-slate-400 text-center uppercase tracking-widest font-bold">
+                Resultados y gráficas
             </div>
           </div>
           
