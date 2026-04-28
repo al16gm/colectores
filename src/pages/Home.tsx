@@ -24,8 +24,8 @@ export default function Home({ onStart }: HomeProps) {
           transition={{ delay: 0.1 }}
           className="text-6xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9]"
         >
-          Dimensionamiento <br/>
-          <span className="text-blue-600">Hidráulico</span>
+          SaniDimension <br/>
+          <span className="text-blue-600">Dimensionamiento Hidráulico</span>
         </motion.h1>
         
         <motion.p 
