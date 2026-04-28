@@ -3,8 +3,10 @@ import { Calculator, AlertCircle, CheckCircle2, ChevronRight } from 'lucide-reac
 import { calculateCircularManning, interpolateThormannFrankeByQ } from '../lib/hydraulics';
 import HydraulicChart from '../components/HydraulicChart';
 import { ProblemSolution } from '../components/ProblemSolution';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem1() {
+  const { t } = useLanguage();
   const [params, setParams] = useState({
     diameter_mm: 800,
     n: 0.014,
@@ -63,20 +65,20 @@ export default function Problem1() {
       <header className="space-y-2">
         <div className="flex items-center gap-2 text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em]">
           <Calculator className="w-3 h-3" />
-          Módulo práctico
+          {t.common.practicalModule}
         </div>
         <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
-          Dimensionamiento básico de colector circular
+          {t.nav.p1}
         </h1>
         <p className="text-sm text-slate-500 font-medium">Aplicación de Manning y relaciones de llenado parcial para una sección circular.</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
         <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
-          Qué se pretende en este módulo
+          {t.common.moduleAim}
         </p>
         <p className="text-sm text-blue-900 font-medium leading-relaxed">
-          Aplicar la fórmula de Manning y las relaciones de llenado parcial para comprobar la velocidad, la capacidad hidráulica y el grado de llenado en un colector circular.
+          {t.aims.p1}
         </p>
       </section>
 
@@ -86,7 +88,7 @@ export default function Problem1() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-              Datos de entrada: Geometría y Pendiente
+              {t.common.inputData}: Geometría y Pendiente
             </h3>
             
             <div className="space-y-5">
@@ -130,7 +132,7 @@ export default function Problem1() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-              Datos de entrada: Población y Dotación
+              {t.common.inputData}: Población y Dotación
             </h3>
             <div className="space-y-4">
               <div className="space-y-1.5">
@@ -151,7 +153,7 @@ export default function Problem1() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-              Datos de entrada: Pluviales
+              {t.common.inputData}: Pluviales
             </h3>
             <div className="space-y-4">
                <div className="space-y-1.5">
@@ -171,7 +173,7 @@ export default function Problem1() {
         {/* Right: Results Panel */}
         <section className="lg:col-span-12 space-y-6">
           <div className={`p-6 rounded-xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-green-500' : 'bg-white border-t-orange-500'}`}>
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
+            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">{t.common.hydraulicChecks}</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div className="space-y-2">
@@ -230,7 +232,7 @@ export default function Problem1() {
           </div>
 
           <div className="w-full">
-            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Resultados y gráficas</h3>
+            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{t.common.resultsCharts}</h3>
             <HydraulicChart 
               currentYOverD={solution.yOverD}
               currentVOverVllu={solution.vOverVllu}
