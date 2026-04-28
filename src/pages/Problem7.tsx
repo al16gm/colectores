@@ -100,18 +100,27 @@ export default function Problem7() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <Calculator className="w-4 h-4" />
-          Ejercicio 7
+          Módulo práctico
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Dimensionamiento Zonal</h1>
-        <p className="text-slate-600 mt-2">Cálculo de red para dos sectores urbanos diferenciados que convergen en un punto.</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Dimensionamiento zonal de red de saneamiento</h1>
+        <p className="text-slate-600 mt-2">Agregación de aportaciones por zonas urbanas y verificación del colector resultante.</p>
       </header>
+
+      <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+        <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
+          Qué se pretende en este módulo
+        </p>
+        <p className="text-sm text-blue-900 font-medium leading-relaxed">
+          Agregar aportaciones por zonas o subcuencas urbanas y verificar el comportamiento hidráulico del colector resultante.
+        </p>
+      </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
               <h3 className="font-bold text-slate-800 flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-blue-500" />
-                Configuración Zona A
+                Datos de entrada: Zona A
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
@@ -136,7 +145,7 @@ export default function Problem7() {
            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
               <h3 className="font-bold text-slate-800 flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-indigo-500" />
-                Configuración Zona B
+                Datos de entrada: Zona B
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
@@ -161,7 +170,7 @@ export default function Problem7() {
            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
                <h3 className="font-bold text-slate-800 flex items-center gap-2">
                  <Calculator className="w-4 h-4 text-slate-500" />
-                 Dimensionamiento Colector Final
+                 Datos de entrada: Colector Final
                </h3>
                <div className="grid grid-cols-2 gap-4">
                  <div className="space-y-1">
@@ -177,7 +186,7 @@ export default function Problem7() {
 
             <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
                <h3 className="font-bold text-slate-800 flex items-center gap-2 text-sm uppercase tracking-widest text-slate-400">
-                 Configuración Global
+                 Datos de entrada: Parámetros Globales
                </h3>
                <div className="grid grid-cols-2 gap-4">
                  <div className="space-y-1">
@@ -202,7 +211,7 @@ export default function Problem7() {
 
         <section className="space-y-6">
            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl space-y-8">
-                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest border-b pb-4">Convergencia en Punto C</h3>
+                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest border-b pb-4">Resultados y gráficas</h3>
                 
                 <div className="grid grid-cols-2 gap-4">
                    <div className="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 relative overflow-hidden group">
@@ -253,7 +262,7 @@ export default function Problem7() {
                 </div>
 
                 <div className={`p-6 rounded-2xl border-t-4 shadow-sm bg-slate-50 ${solution.isValid ? 'border-t-green-500' : 'border-t-orange-500'}`}>
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Verificación Hidráulica Final</h4>
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Verificaciones hidráulicas</h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-white rounded-lg border border-slate-100">
                       <p className="text-[9px] text-slate-400 font-bold uppercase mb-1">v_min (Residual)</p>
