@@ -3,8 +3,10 @@ import { Calculator, CheckCircle2, AlertCircle, TrendingUp } from 'lucide-react'
 import { calculateCircularManning, interpolateThormannFrankeByQ } from '../lib/hydraulics';
 import HydraulicChart from '../components/HydraulicChart';
 import { ProblemSolution } from '../components/ProblemSolution';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem2() {
+  const { t } = useLanguage();
   const [data, setData] = useState({
     q_med_actual: 0.05,
     q_min_actual: 0.02,
@@ -54,25 +56,25 @@ export default function Problem2() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <TrendingUp className="w-4 h-4" />
-          Módulo práctico
+          {t.common.practicalModule}
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Verificación hidráulica de colector urbano</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p2}</h1>
         <p className="text-slate-600 mt-2">Evaluación de un colector urbano en situación actual y horizonte de diseño.</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
         <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
-          Qué se pretende en este módulo
+          {t.common.moduleAim}
         </p>
         <p className="text-sm text-blue-900 font-medium leading-relaxed">
-          Evaluar el comportamiento actual y futuro de un colector urbano considerando caudales residuales, caudales pluviales y horizonte de diseño.
+          {t.aims.p2}
         </p>
       </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
-            <h2 className="text-lg font-bold text-slate-800 border-b pb-4">Datos de entrada: Caudales de Diseño (m³/s)</h2>
+            <h2 className="text-lg font-bold text-slate-800 border-b pb-4">{t.common.inputData}: Caudales de Diseño (m³/s)</h2>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
                 <p className="text-xs font-black text-blue-600 uppercase">Situación actual</p>
@@ -100,7 +102,7 @@ export default function Problem2() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Parámetros del Colector</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Parámetros del Colector</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-[10px] text-slate-400 uppercase">Diámetro (mm)</label>
@@ -116,7 +118,7 @@ export default function Problem2() {
 
         <section className="space-y-6">
           <div className={`p-6 rounded-2xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-blue-500' : 'bg-white border-t-orange-500'}`}>
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
+            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">{t.common.hydraulicChecks}</h3>
             
             <div className="space-y-6">
                 <div className="space-y-2">
@@ -161,7 +163,7 @@ export default function Problem2() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-slate-100 italic text-[10px] text-slate-400 text-center uppercase tracking-widest font-bold">
-                Resultados y gráficas
+                {t.common.resultsCharts}
             </div>
           </div>
           
