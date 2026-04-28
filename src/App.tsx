@@ -39,14 +39,14 @@ export default function App() {
 
   const navItems = [
     { id: 'home', label: 'Inicio', icon: HomeIcon, category: 'General' },
-    { id: 'resources', label: 'Material Complementario', icon: BookOpen, category: 'General' },
-    { id: 'p1', label: 'Problema 1: Sección Circular', icon: Calculator, category: 'Ejercicios' },
-    { id: 'p2', label: 'Problema 2: Colector Urbano', icon: Calculator, category: 'Ejercicios' },
-    { id: 'p3', label: 'Problema 3: Sección Ovoide', icon: Calculator, category: 'Ejercicios' },
-    { id: 'p4', label: 'Problema 4: Galería', icon: Calculator, category: 'Ejercicios' },
-    { id: 'p5', label: 'Problema 5: Vertedero', icon: Calculator, category: 'Ejercicios' },
-    { id: 'p6', label: 'Problema 6: Colector Unitario', icon: Calculator, category: 'Ejercicios' },
-    { id: 'p7', label: 'Problema 7: Dimensionamiento Zonal', icon: Calculator, category: 'Ejercicios' },
+    { id: 'resources', label: 'Base teórica y tablas hidráulicas', icon: BookOpen, category: 'General' },
+    { id: 'p1', label: 'Dimensionamiento básico de colector circular', icon: Calculator, category: 'Módulos' },
+    { id: 'p2', label: 'Verificación hidráulica de colector urbano', icon: Calculator, category: 'Módulos' },
+    { id: 'p3', label: 'Diseño de sección ovoide', icon: Calculator, category: 'Módulos' },
+    { id: 'p4', label: 'Comprobación de galería visitable', icon: Calculator, category: 'Módulos' },
+    { id: 'p5', label: 'Diseño de vertedero de alivio', icon: Calculator, category: 'Módulos' },
+    { id: 'p6', label: 'Colector unitario con aportación pluvial', icon: Calculator, category: 'Módulos' },
+    { id: 'p7', label: 'Dimensionamiento zonal de red de saneamiento', icon: Calculator, category: 'Módulos' },
   ];
 
   const currentLabel = navItems.find(n => n.id === currentPage)?.label || '';
@@ -99,9 +99,9 @@ export default function App() {
               ))}
             </div>
 
-            <div className="px-6 py-2 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-2">Ejercicios Prácticos</div>
+            <div className="px-6 py-2 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-2">Módulos Prácticos</div>
             <div className="space-y-1">
-              {navItems.filter(i => i.category === 'Ejercicios').map((item) => (
+              {navItems.filter(i => i.category === 'Módulos').map((item) => (
                 <button
                   key={item.id}
                   onClick={() => {
@@ -123,7 +123,7 @@ export default function App() {
           </nav>
 
           <div className="p-6 bg-slate-800/10 mt-auto border-t border-slate-800/50">
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">Software Técnico</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">Herramienta docente</p>
           </div>
         </aside>
 
@@ -138,10 +138,10 @@ export default function App() {
             </div>
             <div className="flex space-x-3">
               <button className="px-4 py-1.5 text-xs font-bold text-slate-600 border border-slate-200 rounded-md bg-white hover:bg-slate-50 transition-colors uppercase tracking-wider">
-                Ver Manual
+                Guía docente
               </button>
               <button className="px-4 py-1.5 text-xs font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors uppercase tracking-wider">
-                Guardar
+                Exportar resultados
               </button>
             </div>
           </header>
