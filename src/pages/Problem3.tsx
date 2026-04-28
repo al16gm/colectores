@@ -63,16 +63,25 @@ export default function Problem3() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <Calculator className="w-4 h-4" />
-          Ejercicio 3
+          Módulo práctico
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Sección Ovoide</h1>
-        <p className="text-slate-600 mt-2">Dimensionamiento de colector de sección ovoide para saneamiento urbano.</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Diseño de sección ovoide</h1>
+        <p className="text-slate-600 mt-2">Selección y comprobación hidráulica de una sección ovoide para caudales variables.</p>
       </header>
+
+      <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+        <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
+          Qué se pretende en este módulo
+        </p>
+        <p className="text-sm text-blue-900 font-medium leading-relaxed">
+          Seleccionar y comprobar una sección ovoide para transportar caudales variables, verificando autolimpieza, velocidad máxima y grado de llenado.
+        </p>
+      </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Cálculo de Caudales</h2>
+            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Cálculo de Caudales</h2>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
                 <label className="text-xs font-bold text-slate-500 uppercase">Población (hab)</label>
@@ -104,7 +113,7 @@ export default function Problem3() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Parámetros Hidráulicos</h2>
+            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Parámetros Hidráulicos</h2>
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                     <label className="text-xs font-bold text-slate-500 uppercase">Sección Comercial</label>
@@ -128,12 +137,12 @@ export default function Problem3() {
 
         <section className="space-y-6">
             <div className={`p-6 rounded-2xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-indigo-500' : 'bg-white border-t-red-500'}`}>
-                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Balance de Funcionamiento</h3>
+                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
                 
                 <div className="space-y-6">
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Autolimpieza (Qmin)</span>
+                            <span>Autolimpieza</span>
                             <span className={(solution.vMin || 0) >= 0.3 ? 'text-green-600' : 'text-red-600'}>{(solution.vMin || 0).toFixed(2)} / 0.30 m/s</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -143,7 +152,7 @@ export default function Problem3() {
 
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Velocidad Punta (Qp)</span>
+                            <span>Velocidad punta</span>
                             <span className={(solution.vP || 0) <= 3.0 ? 'text-indigo-600' : 'text-red-600'}>{(solution.vP || 0).toFixed(2)} / 3.00 m/s</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -163,7 +172,7 @@ export default function Problem3() {
 
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Grado de Llenado Total (y/H)</span>
+                            <span>Llenado máximo (Qtotal)</span>
                             <span className={(solution.yOverD || 0) <= 0.8 ? 'text-blue-600' : 'text-red-600'}>{(solution.yOverD || 0).toFixed(3)} / 0.800</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -190,18 +199,18 @@ export default function Problem3() {
                         </div>
                         <p className="text-[11px] font-medium text-slate-600 leading-relaxed uppercase tracking-tight">
                             {solution.isValid 
-                                ? "La sección ovoide seleccionada cumple satisfactoriamente con los criterios de autolimpieza y capacidad." 
-                                : "Sección insuficiente o fuera de rango de autolimpieza. Revise pendiente o aumente sección."}
+                                ? "El caso cumple los criterios hidráulicos considerados en el módulo." 
+                                : "Se recomienda revisar los parámetros de entrada."}
                         </p>
                     </div>
                 </div>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-100 space-y-4">
-                <h3 className="font-bold text-slate-800">Propiedades de la Sección</h3>
+                <h3 className="font-bold text-slate-800 text-xs uppercase tracking-widest text-slate-400 border-b pb-2">Resultados y gráficas</h3>
                 <div className="text-sm text-slate-600 space-y-2">
-                    <p className="flex justify-between"><span>Radio Hidráulico (Rh,ll):</span> <span className="font-mono">{(solution.full?.radiusHydraulicFull || 0).toFixed(3)} m</span></p>
-                    <p className="flex justify-between"><span>Área Lleno (S,ll):</span> <span className="font-mono">{(solution.full?.areaFull || 0).toFixed(3)} m²</span></p>
+                    <p className="flex justify-between"><span>Radio Hidráulico (Rh,ll):</span> <span className="font-mono">{(solution.full?.RH || 0).toFixed(3)} m</span></p>
+                    <p className="flex justify-between"><span>Área Lleno (S,ll):</span> <span className="font-mono">{(solution.full?.area || 0).toFixed(3)} m²</span></p>
                     <p className="flex justify-between"><span>Velocidad Llena (Vll):</span> <span className="font-mono">{(solution.full?.vFull || 0).toFixed(3)} m/s</span></p>
                 </div>
             </div>
@@ -209,7 +218,7 @@ export default function Problem3() {
                <HydraulicChart 
                  type="ovoid"
                  currentYOverD={solution.yOverD}
-                 currentVOverVllu={solution.vMax / (solution.full?.vFull || 1)}
+                 currentVOverVllu={solution.vReal / (solution.full?.vFull || 1)}
                  currentQOverQllu={solution.qRatio}
                />
             </div>
@@ -231,7 +240,7 @@ export default function Problem3() {
           description: `Para un ovoide de altura H=${params.selected_height_cm}cm, calculamos sus propiedades geométricas y capacidad máxima mediante Manning.`,
           formula: "Q_ll = (1/n) · A · Rh^(2/3) · J^(1/2)",
           calcLabel: "Cálculo de Capacidad Máxima",
-          calculation: `Q_ll = (1/${params.n}) · ${(solution.full?.areaFull || 0).toFixed(3)} · ${(solution.full?.radiusHydraulicFull || 0).toFixed(3)}^(2/3) · ${params.j}^(1/2)`,
+          calculation: `Q_ll = (1/${params.n}) · ${(solution.full?.area || 0).toFixed(3)} · ${(solution.full?.RH || 0).toFixed(3)}^(2/3) · ${params.j}^(1/2)`,
           result: `${(solution.full?.qFull || 0).toFixed(3)} m³/s | V_ll: ${(solution.full?.vFull || 0).toFixed(2)} m/s`
         },
         {
@@ -240,7 +249,7 @@ export default function Problem3() {
           formula: "q = Q_total / Q_ll",
           calcLabel: "Interpolación Ovoidal",
           calculation: `q = ${(solution.q_max_total_m3 || 0).toFixed(3)} / ${(solution.full?.qFull || 0).toFixed(3)} = ${(solution.qRatio || 0).toFixed(3)}`,
-          result: `y/H = ${(solution.yOverD || 0).toFixed(3)} | v/vll = ${(solution.vMax / (solution.full?.vFull || 1)).toFixed(3)}`
+          result: `y/H = ${(solution.yOverD || 0).toFixed(3)} | v/vll = ${(solution.vReal / (solution.full?.vFull || 1)).toFixed(3)}`
         },
         {
           title: "4. Comprobación de Resultados",
