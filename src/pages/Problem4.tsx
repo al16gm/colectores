@@ -54,16 +54,25 @@ export default function Problem4() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <Ruler className="w-4 h-4" />
-          Ejercicio 4
+          Módulo práctico
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Galería Visitable</h1>
-        <p className="text-slate-600 mt-2">Dimensionamiento de colector visitable con cuneta para aguas negras.</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Comprobación de galería visitable</h1>
+        <p className="text-slate-600 mt-2">Evaluación hidráulica de una sección de gran tamaño tipo galería visitable.</p>
       </header>
+
+      <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+        <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
+          Qué se pretende en este módulo
+        </p>
+        <p className="text-sm text-blue-900 font-medium leading-relaxed">
+          Analizar una sección de gran tamaño tipo galería visitable y verificar su capacidad hidráulica, velocidad de circulación y grado de llenado.
+        </p>
+      </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Caudales de Diseño</h2>
+            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Caudales de Diseño</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-bold text-slate-500 uppercase">Q Mínimo (l/s)</label>
@@ -81,7 +90,7 @@ export default function Problem4() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Geometría de la Galería</h2>
+            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Geometría de la Galería</h2>
             <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-1">
                     <label className="text-xs font-bold text-slate-500 uppercase">Cuneta D (mm)</label>
@@ -101,7 +110,7 @@ export default function Problem4() {
 
         <section className="space-y-6">
             <div className={`p-6 rounded-2xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-blue-500' : 'bg-white border-t-red-500'}`}>
-                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Evaluación Técnica de Galería</h3>
+                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
                 
                 <div className="space-y-6">
                     <div className="space-y-2">
@@ -151,7 +160,7 @@ export default function Problem4() {
             </div>
             
             <div className="bg-white p-6 rounded-2xl border border-slate-100 flex flex-col items-center justify-center min-h-[300px]">
-                <h4 className="text-xs font-bold text-slate-400 uppercase mb-4">Esquema Transversal</h4>
+                <h4 className="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">Resultados y gráficas</h4>
                 <svg width="160" height="200" viewBox="0 0 100 120" className="drop-shadow-xl overflow-visible">
                     {/* Gallery Structure */}
                     <path d="M10,40 A40,40 0 0,1 90,40 L90,110 L10,110 Z" fill="#f1f5f9" stroke="#1e293b" strokeWidth="2.5" />
