@@ -4,8 +4,10 @@ import { calculateOvoidFull, interpolateOvoidByQ } from '../lib/hydraulics';
 import { OVOID_COMMERCIAL_SECTIONS } from '../lib/constants';
 import HydraulicChart from '../components/HydraulicChart';
 import { ProblemSolution } from '../components/ProblemSolution';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem3() {
+  const { t } = useLanguage();
   const [params, setParams] = useState({
     population: 302400,
     dotation: 250,
@@ -25,7 +27,13 @@ export default function Problem3() {
     
     // Ovoid calcs
     const H = params.selected_height_cm / 100;
-    const full = calculateOvoidFull(params.n, params.j, H);
+    const fullRes = calculateOvoidFull(params.n, params.j, H);
+    const full = {
+      qFull: fullRes.qFull,
+      vFull: fullRes.vFull,
+      areaFull: fullRes.area,
+      radiusHydraulicFull: fullRes.RH
+    };
     
     // Scenario 1: Qmin (Autolimpieza)
     const qRatioMin = (q_min_ls / 1000) / full.qFull;
@@ -63,25 +71,25 @@ export default function Problem3() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <Calculator className="w-4 h-4" />
-          Módulo práctico
+          {t.common.practicalModule}
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Diseño de sección ovoide</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p3}</h1>
         <p className="text-slate-600 mt-2">Selección y comprobación hidráulica de una sección ovoide para caudales variables.</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
         <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
-          Qué se pretende en este módulo
+          {t.common.moduleAim}
         </p>
         <p className="text-sm text-blue-900 font-medium leading-relaxed">
-          Seleccionar y comprobar una sección ovoide para transportar caudales variables, verificando autolimpieza, velocidad máxima y grado de llenado.
+          {t.aims.p3}
         </p>
       </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Cálculo de Caudales</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Cálculo de Caudales</h2>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
                 <label className="text-xs font-bold text-slate-500 uppercase">Población (hab)</label>
@@ -113,7 +121,7 @@ export default function Problem3() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Parámetros Hidráulicos</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Parámetros Hidráulicos</h2>
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                     <label className="text-xs font-bold text-slate-500 uppercase">Sección Comercial</label>
@@ -137,7 +145,7 @@ export default function Problem3() {
 
         <section className="space-y-6">
             <div className={`p-6 rounded-2xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-indigo-500' : 'bg-white border-t-red-500'}`}>
-                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
+                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">{t.common.hydraulicChecks}</h3>
                 
                 <div className="space-y-6">
                     <div className="space-y-2">
@@ -207,7 +215,7 @@ export default function Problem3() {
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-100 space-y-4">
-                <h3 className="font-bold text-slate-800 text-xs uppercase tracking-widest text-slate-400 border-b pb-2">Resultados y gráficas</h3>
+                <h3 className="font-bold text-slate-800 text-xs uppercase tracking-widest text-slate-400 border-b pb-2">{t.common.resultsCharts}</h3>
                 <div className="text-sm text-slate-600 space-y-2">
                     <p className="flex justify-between"><span>Radio Hidráulico (Rh,ll):</span> <span className="font-mono">{(solution.full?.radiusHydraulicFull || 0).toFixed(3)} m</span></p>
                     <p className="flex justify-between"><span>Área Lleno (S,ll):</span> <span className="font-mono">{(solution.full?.areaFull || 0).toFixed(3)} m²</span></p>
