@@ -22,7 +22,7 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({ steps }) => {
     <div id="problem-solution-container" className="mt-8 space-y-6">
       <div className="flex items-center gap-2 mb-4">
         <Calculator className="w-5 h-5 text-blue-600" />
-        <h3 className="text-sm font-black text-slate-700 uppercase tracking-widest">Desarrollo Paso a Paso</h3>
+        <h3 className="text-sm font-black text-slate-700 uppercase tracking-widest">Desarrollo paso a paso</h3>
       </div>
       
       <div className="space-y-4">
