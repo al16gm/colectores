@@ -58,16 +58,25 @@ export default function Problem5() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <Calculator className="w-4 h-4" />
-          Ejercicio 5
+          Módulo práctico
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Diseño de Aliviadero</h1>
-        <p className="text-slate-600 mt-2">Cálculo de dilución, caudal vertido y dimensionamiento de vertedero lateral.</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Diseño de vertedero de alivio</h1>
+        <p className="text-slate-600 mt-2">Cálculo hidráulico de un vertedero o aliviadero en una red de saneamiento.</p>
       </header>
+
+      <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+        <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
+          Qué se pretende en este módulo
+        </p>
+        <p className="text-sm text-blue-900 font-medium leading-relaxed">
+          Calcular el funcionamiento hidráulico de un vertedero de alivio y comprobar la relación entre carga hidráulica, caudal vertido y capacidad de derivación.
+        </p>
+      </section>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">Caudales de Entrada</h2>
+            <h2 className="text-lg font-bold text-slate-800">Datos de entrada: Caudales de Entrada</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-bold text-slate-500 uppercase">Q Máximo (m³/s)</label>
@@ -101,7 +110,7 @@ export default function Problem5() {
 
         <section className="space-y-6">
           <div className="bg-slate-900 text-white p-8 rounded-3xl shadow-xl space-y-6">
-            <h3 className="text-xl font-bold border-b border-white/10 pb-4">Dimensionamiento</h3>
+            <h3 className="text-xl font-bold border-b border-white/10 pb-4">Verificaciones hidráulicas</h3>
             
             <div className="space-y-8">
                <div className="grid grid-cols-2 gap-4">
@@ -144,10 +153,13 @@ export default function Problem5() {
                   </div>
                </div>
 
-               <HydraulicChart 
-                  currentYOverD={solution.yOverDS}
-                  currentQOverQllu={solution.qs / (calculateCircularManning({n: data.n, j: data.j, d: solution.d_comercial}).qFull || 1)}
-               />
+                <div className="space-y-4 border-t border-white/10 pt-6">
+                  <p className="text-[10px] font-bold text-white/40 uppercase tracking_widest">Resultados y gráficas</p>
+                  <HydraulicChart 
+                     currentYOverD={solution.yOverDS}
+                     currentQOverQllu={solution.qs / (calculateCircularManning({n: data.n, j: data.j, d: solution.d_comercial}).qFull || 1)}
+                  />
+                </div>
             </div>
           </div>
         </section>
