@@ -34,8 +34,8 @@ export default function Home({ onStart }: HomeProps) {
           transition={{ delay: 0.2 }}
           className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium"
         >
-          Plataforma técnica para el cálculo de colectores, galerías y sistemas de saneamiento 
-          bajo normativas internacionales de ingeniería sanitaria.
+          Herramienta docente interactiva para el aprendizaje activo del dimensionamiento hidráulico de colectores 
+          urbanos, combinando cálculo guiado, verificaciones hidráulicas y visualización gráfica.
         </motion.p>
 
         <motion.div
@@ -48,7 +48,7 @@ export default function Home({ onStart }: HomeProps) {
             onClick={onStart}
             className="px-10 py-4 bg-slate-900 text-white rounded-lg font-bold text-sm hover:bg-slate-800 transition-all shadow-2xl shadow-slate-200 flex items-center gap-3 uppercase tracking-widest"
           >
-            Configurar Escenario
+            Comenzar módulos
             <ArrowRight className="w-5 h-5 text-blue-400" />
           </button>
         </motion.div>
@@ -57,17 +57,17 @@ export default function Home({ onStart }: HomeProps) {
       <div className="grid md:grid-cols-3 gap-6 mt-16 px-4">
         {[
           {
-            title: "Manning Exacto",
+            title: "Cálculo de Manning",
             desc: "Algoritmos optimizados para secciones circulares, ovoides y galerías visitables de cualquier escala.",
             icon: Droplets
           },
           {
-            title: "Normativa Thormann",
+            title: "Llenado parcial",
             desc: "Relaciones hidráulicas precisas y/D, V/Vll y Q/Qll basadas en las tablas de Thormann y Franke.",
             icon: BarChart3
           },
           {
-            title: "Verificación de Límites",
+            title: "Verificación hidráulica",
             desc: "Validación automática de velocidades de autolimpieza y erosión (0.6 - 5.0 m/s).",
             icon: Ruler
           }
@@ -92,7 +92,7 @@ export default function Home({ onStart }: HomeProps) {
         <div className="bg-slate-900 rounded-xl p-12 text-white relative overflow-hidden">
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <h2 className="text-3xl font-black mb-6 tracking-tight leading-tight">Control de Variables <br/> en Tiempo Real</h2>
+              <h2 className="text-3xl font-black mb-6 tracking-tight leading-tight">Aprendizaje activo <br/> con resultados interactivos</h2>
               <div className="space-y-4">
                 {[
                   "Ajuste de rugosidad según material (n)",
@@ -114,11 +114,11 @@ export default function Home({ onStart }: HomeProps) {
                 <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
               </div>
               <div className="space-y-2 font-mono text-[10px] text-blue-300">
-                <p># CALCULATING HYDRAULIC BALANCE</p>
-                <p>diameter: 600mm</p>
-                <p>slope: 0.008 m/m</p>
-                <p>velocity: 1.54 m/s [VALID]</p>
-                <p>filling_ratio: 0.72 [CRITICAL]</p>
+                <p># VERIFICACIÓN HIDRÁULICA</p>
+                <p>diámetro: 600mm</p>
+                <p>pendiente: 0.008 m/m</p>
+                <p>velocidad: 1.54 m/s [Válida]</p>
+                <p>llenado: 0.72 [CRÍTICA]</p>
               </div>
             </div>
           </div>
