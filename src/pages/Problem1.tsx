@@ -63,13 +63,22 @@ export default function Problem1() {
       <header className="space-y-2">
         <div className="flex items-center gap-2 text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em]">
           <Calculator className="w-3 h-3" />
-          Módulo de Cálculo Técnico
+          Módulo práctico
         </div>
         <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
-          Sección Circular
+          Dimensionamiento básico de colector circular
         </h1>
-        <p className="text-sm text-slate-500 font-medium">Dimensionamiento hidráulico bajo flujo uniforme en colectores circulares.</p>
+        <p className="text-sm text-slate-500 font-medium">Aplicación de Manning y relaciones de llenado parcial para una sección circular.</p>
       </header>
+
+      <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+        <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
+          Qué se pretende en este módulo
+        </p>
+        <p className="text-sm text-blue-900 font-medium leading-relaxed">
+          Aplicar la fórmula de Manning y las relaciones de llenado parcial para comprobar la velocidad, la capacidad hidráulica y el grado de llenado en un colector circular.
+        </p>
+      </section>
 
       <div className="grid lg:grid-cols-12 gap-8 items-start">
         {/* Left: Input Panel */}
@@ -77,7 +86,7 @@ export default function Problem1() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-              Geometría y Pendiente
+              Datos de entrada: Geometría y Pendiente
             </h3>
             
             <div className="space-y-5">
@@ -121,7 +130,7 @@ export default function Problem1() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-              Población y Dotación
+              Datos de entrada: Población y Dotación
             </h3>
             <div className="space-y-4">
               <div className="space-y-1.5">
@@ -142,7 +151,7 @@ export default function Problem1() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center">
               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-              Pluviales
+              Datos de entrada: Pluviales
             </h3>
             <div className="space-y-4">
                <div className="space-y-1.5">
@@ -162,12 +171,12 @@ export default function Problem1() {
         {/* Right: Results Panel */}
         <section className="lg:col-span-12 space-y-6">
           <div className={`p-6 rounded-xl border-t-4 shadow-sm ${solution.isValid ? 'bg-white border-t-green-500' : 'bg-white border-t-orange-500'}`}>
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Balance Normativo</h3>
+            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-6">Verificaciones hidráulicas</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Autolimpieza (Qmin)</span>
+                    <span>Autolimpieza</span>
                     <span className={solution.vMin >= 0.3 ? 'text-green-600' : 'text-orange-600'}>{(solution.vMin || 0).toFixed(2)} / 0.30 m/s</span>
                   </div>
                   <div className="h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -177,7 +186,7 @@ export default function Problem1() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>V_punta (Dry Weather)</span>
+                    <span>Velocidad punta (Residual)</span>
                     <span className={solution.vP >= 0.6 ? 'text-blue-600' : 'text-orange-600'}>{(solution.vP || 0).toFixed(2)} / 0.60 m/s</span>
                   </div>
                   <div className="h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -187,7 +196,7 @@ export default function Problem1() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>V_max (Rainy)</span>
+                    <span>Velocidad máxima (Pluviales)</span>
                     <span className={solution.vMax <= 5.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.vMax || 0).toFixed(2)} / 5.00 m/s</span>
                   </div>
                   <div className="h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -213,14 +222,15 @@ export default function Problem1() {
                 </div>
                 <p className="text-[11px] font-medium text-slate-600 leading-relaxed uppercase tracking-tight">
                   {solution.isValid 
-                    ? "Dimensionamiento óptimo. Se cumplen todos los criterios de la sección circular." 
-                    : "Se requiere revisión técnica. Los parámetros exceden los límites normativos."}
+                    ? "El caso cumple los criterios hidráulicos considerados en el módulo." 
+                    : "Se recomienda revisar los parámetros de diseño."}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="w-full">
+            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Resultados y gráficas</h3>
             <HydraulicChart 
               currentYOverD={solution.yOverD}
               currentVOverVllu={solution.vOverVllu}
