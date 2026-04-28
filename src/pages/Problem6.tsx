@@ -3,8 +3,10 @@ import { Users, CloudRain, Calculator, CheckCircle2, AlertCircle } from 'lucide-
 import { interpolateThormannFrankeByQ, calculateCircularManning } from '../lib/hydraulics';
 import { ProblemSolution } from '../components/ProblemSolution';
 import HydraulicChart from '../components/HydraulicChart';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem6() {
+  const { t } = useLanguage();
   const [params, setParams] = useState({
     population: 250000,
     dotation: 200,
@@ -75,18 +77,18 @@ export default function Problem6() {
       <header>
         <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">
           <Calculator className="w-4 h-4" />
-          Módulo práctico
+          {t.common.practicalModule}
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Colector unitario con aportación pluvial</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p6}</h1>
         <p className="text-slate-600 mt-2">Comprobación de un colector unitario que transporta caudal residual y escorrentía pluvial.</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
         <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em] mb-2">
-          Qué se pretende en este módulo
+          {t.common.moduleAim}
         </p>
         <p className="text-sm text-blue-900 font-medium leading-relaxed">
-          Comprobar un colector unitario que transporta conjuntamente aguas residuales y aportación pluvial, evaluando velocidad, llenado y capacidad hidráulica.
+          {t.aims.p6}
         </p>
       </section>
 
@@ -95,7 +97,7 @@ export default function Problem6() {
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
             <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
               <Users className="w-5 h-5 text-blue-500" />
-              Datos de entrada: Población
+              {t.common.inputData}: Población
             </h2>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
@@ -120,7 +122,7 @@ export default function Problem6() {
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
             <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
               <CloudRain className="w-5 h-5 text-indigo-500" />
-              Datos de entrada: Cuenca
+              {t.common.inputData}: Cuenca
             </h2>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
@@ -141,7 +143,7 @@ export default function Problem6() {
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
             <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
               <Calculator className="w-5 h-5 text-slate-500" />
-              Datos de entrada: Parámetros del Colector
+              {t.common.inputData}: Parámetros del Colector
             </h2>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
@@ -158,7 +160,7 @@ export default function Problem6() {
 
         <section className="space-y-6">
           <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl space-y-6">
-            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest border-b pb-4">Resultados y gráficas</h3>
+            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest border-b pb-4">{t.common.resultsCharts}</h3>
             
             <div className="space-y-4">
                <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
@@ -215,7 +217,7 @@ export default function Problem6() {
                </div>
 
                <div className={`p-6 rounded-2xl border-t-4 shadow-sm bg-slate-50 ${solution.isValid ? 'border-t-green-500' : 'border-t-orange-500'}`}>
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Verificaciones hidráulicas</h4>
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">{t.common.hydraulicChecks}</h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-white rounded-lg border border-slate-100">
                       <p className="text-[9px] text-slate-400 font-bold uppercase mb-1">v_min (Residual)</p>
