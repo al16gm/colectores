@@ -31,8 +31,8 @@ export default function Problem3() {
     const full = {
       qFull: fullRes.qFull,
       vFull: fullRes.vFull,
-      areaFull: fullRes.area,
-      radiusHydraulicFull: fullRes.RH
+      areaFull: fullRes.areaFull,
+      radiusHydraulicFull: fullRes.radiusHydraulicFull
     };
     
     // Scenario 1: Qmin (Autolimpieza)
