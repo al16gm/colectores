@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Calculator, Info, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface SolutionStep {
   title: string;
@@ -16,72 +17,77 @@ interface ProblemSolutionProps {
 }
 
 export const ProblemSolution: React.FC<ProblemSolutionProps> = ({ steps }) => {
+  const { t } = useLanguage();
+
   if (!steps || steps.length === 0) return null;
 
   return (
-    <div id="problem-solution-container" className="mt-8 space-y-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Calculator className="w-5 h-5 text-blue-600" />
-        <h3 className="text-sm font-black text-slate-700 uppercase tracking-widest">Desarrollo paso a paso</h3>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
+    >
+      <div className="p-6 border-b border-slate-100 flex items-center gap-3">
+        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+          <Calculator size={20} />
+        </div>
+        <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">
+          {t.common.stepByStep}
+        </h3>
       </div>
-      
-      <div className="space-y-4">
+
+      <div className="p-6 space-y-6">
         {steps.map((step, index) => (
-          <motion.div 
-            key={index}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
-            className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm relative overflow-hidden"
-          >
-            <div className="absolute top-0 left-0 w-1 h-full bg-blue-500" />
-            
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
-                {index + 1}
-              </div>
-              
-              <div className="flex-1 space-y-3">
-                <h4 className="font-bold text-slate-800 text-sm">{step.title}</h4>
-                <p className="text-slate-600 text-sm leading-relaxed">{step.description}</p>
-                
-                {step.formula && (
-                  <div className="bg-slate-50 p-2 rounded border border-slate-100 font-mono text-[11px] text-blue-700 flex items-center overflow-x-auto">
-                    <span className="text-slate-400 mr-2 shrink-0">Fórmula:</span>
-                    <span className="whitespace-nowrap">{step.formula}</span>
-                  </div>
-                )}
-                
-                {step.calculation && (
-                  <div className="flex flex-wrap items-center gap-2 py-1 text-sm text-slate-700 font-medium">
-                    <span className="text-slate-400 text-[10px] font-black uppercase tracking-tighter">
-                      {step.calcLabel ? `${step.calcLabel}:` : 'Cálculo:'}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs">{step.calculation}</span>
-                      <ArrowRight className="w-3 h-3 text-slate-300" />
-                      <span className="text-blue-600 font-bold">{step.result}</span>
-                    </div>
-                  </div>
-                )}
-                
-                {!step.calculation && step.result && (
-                   <div className="text-sm font-bold text-blue-600">
-                     Resultado: {step.result}
-                   </div>
-                )}
-              </div>
+          <div key={`${step.title}-${index}`} className="relative pl-10">
+            {index < steps.length - 1 && (
+              <div className="absolute left-[15px] top-8 bottom-[-24px] w-px bg-slate-200" />
+            )}
+            <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+              {index + 1}
             </div>
-          </motion.div>
+
+            <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+              <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                {step.title}
+                {index < steps.length - 1 && <ArrowRight size={14} className="text-slate-400" />}
+              </h4>
+              <p className="text-sm text-slate-600 leading-relaxed mb-3">
+                {step.description}
+              </p>
+
+              {step.formula && (
+                <div className="bg-white rounded-lg border border-slate-200 p-3 mb-3 font-mono text-xs text-slate-700 overflow-x-auto">
+                  <span className="text-blue-600 font-bold">{t.common.formula}</span> {step.formula}
+                </div>
+              )}
+
+              {step.calculation && (
+                <div className="bg-blue-50/60 rounded-lg border border-blue-100 p-3 font-mono text-xs text-blue-900 overflow-x-auto">
+                  <span className="font-bold">{step.calcLabel ? `${step.calcLabel}:` : t.common.calculation}</span>{' '}
+                  {step.calculation}
+                  {step.result && (
+                    <span className="block mt-2 text-blue-700 font-black">{step.result}</span>
+                  )}
+                </div>
+              )}
+
+              {!step.calculation && step.result && (
+                <div className="bg-blue-50/60 rounded-lg border border-blue-100 p-3 font-mono text-xs text-blue-900 overflow-x-auto">
+                  <span className="font-bold">{t.common.result}</span> {step.result}
+                </div>
+              )}
+            </div>
+          </div>
         ))}
       </div>
-      
-      <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 flex gap-3">
-        <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-        <p className="text-xs text-blue-800 leading-relaxed">
-          <strong>Nota:</strong> los valores de las razones hidráulicas se obtienen mediante interpolación lineal de tablas técnicas. La herramienta tiene finalidad formativa y no sustituye la comprobación con normativa local o proyecto constructivo.
+
+      <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-start gap-3 text-xs text-slate-500">
+        <Info size={16} className="mt-0.5 shrink-0" />
+        <p>
+          <span className="font-bold text-slate-700">{t.common.teachingNote}</span>{' '}
+          {t.common.interpolationNote}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
