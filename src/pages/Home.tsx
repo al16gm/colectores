@@ -118,7 +118,7 @@ export default function Home({ onStart }: HomeProps) {
                 <p>diámetro: 600mm</p>
                 <p>pendiente: 0.008 m/m</p>
                 <p>velocidad: 1.54 m/s [Válida]</p>
-                <p>llenado: 0.72 [CRÍTICA]</p>
+                <p>llenado: 0.72 [Revisar]</p>
               </div>
             </div>
           </div>
