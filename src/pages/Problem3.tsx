@@ -7,7 +7,8 @@ import { ProblemSolution } from '../components/ProblemSolution';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem3() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isEnglish = language === 'en';
   const [params, setParams] = useState({
     population: 302400,
     dotation: 250,
@@ -74,7 +75,7 @@ export default function Problem3() {
           {t.common.practicalModule}
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p3}</h1>
-        <p className="text-slate-600 mt-2">Selección y comprobación hidráulica de una sección ovoide para caudales variables.</p>
+        <p className="text-slate-600 mt-2">{isEnglish ? 'Selection and hydraulic check of an ovoid section for variable flows.' : 'Selección y comprobación hidráulica de una sección ovoide para caudales variables.'}</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
@@ -89,42 +90,42 @@ export default function Problem3() {
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Cálculo de Caudales</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: {isEnglish ? 'Flow Calculation' : 'Cálculo de Caudales'}</h2>
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">Población (hab)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Population (inh)' : 'Población (hab)'}</label>
                 <input type="number" value={params.population} onChange={e => setParams({...params, population: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">Dotación (l/hab·día)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Demand (L/inh·day)' : 'Dotación (l/hab·día)'}</label>
                 <input type="number" value={params.dotation} onChange={e => setParams({...params, dotation: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
                <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">C. Retorno (0-1)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Return Coeff. (0-1)' : 'C. Retorno (0-1)'}</label>
                 <input type="number" step="0.1" value={params.c_retorno} onChange={e => setParams({...params, c_retorno: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">C. Punta (Cp)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Peak Coeff. (Cp)' : 'C. Punta (Cp)'}</label>
                 <input type="number" step="0.1" value={params.cp} onChange={e => setParams({...params, cp: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
             </div>
             <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 space-y-2">
                 <p className="text-sm font-medium text-blue-800 flex justify-between">
-                    <span>Q Min/Med/Punta:</span>
+                    <span>{isEnglish ? 'Min/Mean/Peak Flow:' : 'Q Min/Med/Punta:'}</span>
                     <span className="font-bold">{(solution.q_min_ls || 0).toFixed(1)} / {(solution.q_med_ls || 0).toFixed(1)} / {(solution.q_p_ls || 0).toFixed(1)} l/s</span>
                 </p>
                 <p className="text-sm font-bold text-blue-900 border-t border-blue-200 pt-2 flex justify-between">
-                    <span>Q Diseño Total:</span>
+                    <span>{isEnglish ? 'Total Design Flow:' : 'Q Diseño Total:'}</span>
                     <span>{(solution.q_max_total_m3 || 0).toFixed(3)} m³/s</span>
                 </p>
             </div>
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Parámetros Hidráulicos</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: {isEnglish ? 'Hydraulic Parameters' : 'Parámetros Hidráulicos'}</h2>
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Sección Comercial</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Commercial Section' : 'Sección Comercial'}</label>
                     <select 
                         value={params.selected_height_cm} 
                         onChange={e => setParams({...params, selected_height_cm: Number(e.target.value)})}
@@ -136,7 +137,7 @@ export default function Problem3() {
                     </select>
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Pendiente j</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Slope j' : 'Pendiente j'}</label>
                     <input type="number" step="0.001" value={params.j} onChange={e => setParams({...params, j: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
             </div>
@@ -150,7 +151,7 @@ export default function Problem3() {
                 <div className="space-y-6">
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Autolimpieza</span>
+                            <span>{isEnglish ? 'Self-cleansing' : 'Autolimpieza'}</span>
                             <span className={(solution.vMin || 0) >= 0.3 ? 'text-green-600' : 'text-red-600'}>{(solution.vMin || 0).toFixed(2)} / 0.30 m/s</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -160,7 +161,7 @@ export default function Problem3() {
 
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Velocidad punta</span>
+                            <span>{isEnglish ? 'Peak Velocity' : 'Velocidad punta'}</span>
                             <span className={(solution.vP || 0) <= 3.0 ? 'text-indigo-600' : 'text-red-600'}>{(solution.vP || 0).toFixed(2)} / 3.00 m/s</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -170,7 +171,7 @@ export default function Problem3() {
 
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Velocidad Máxima (Qtotal)</span>
+                            <span>{isEnglish ? 'Maximum Velocity (Qtotal)' : 'Velocidad Máxima (Qtotal)'}</span>
                             <span className={(solution.vMax || 0) <= 5.0 ? 'text-blue-600' : 'text-red-600'}>{(solution.vMax || 0).toFixed(2)} / 5.00 m/s</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -180,7 +181,7 @@ export default function Problem3() {
 
                     <div className="space-y-2">
                         <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                            <span>Llenado máximo (Qtotal)</span>
+                            <span>{isEnglish ? 'Maximum filling (Qtotal)' : 'Llenado máximo (Qtotal)'}</span>
                             <span className={(solution.yOverD || 0) <= 0.8 ? 'text-blue-600' : 'text-red-600'}>{(solution.yOverD || 0).toFixed(3)} / 0.800</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -190,11 +191,11 @@ export default function Problem3() {
 
                     <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 grid grid-cols-2 gap-4">
                         <div className="text-center">
-                            <p className="text-[9px] text-slate-400 font-bold uppercase">Capacidad Llena</p>
+                            <p className="text-[9px] text-slate-400 font-bold uppercase">{isEnglish ? 'Full capacity' : 'Capacidad Llena'}</p>
                             <p className="text-lg font-black text-slate-700">{(solution.full?.qFull || 0).toFixed(3)} <span className="text-xs font-normal">m³/s</span></p>
                         </div>
                         <div className="text-center">
-                            <p className="text-[9px] text-slate-400 font-bold uppercase">Carga Actual</p>
+                            <p className="text-[9px] text-slate-400 font-bold uppercase">{isEnglish ? 'Current Load' : 'Carga Actual'}</p>
                             <p className="text-lg font-black text-slate-700">{(solution.qRatio * 100 || 0).toFixed(1)} <span className="text-xs font-normal">%</span></p>
                         </div>
                     </div>
@@ -207,8 +208,8 @@ export default function Problem3() {
                         </div>
                         <p className="text-[11px] font-medium text-slate-600 leading-relaxed uppercase tracking-tight">
                             {solution.isValid 
-                                ? "El caso cumple los criterios hidráulicos considerados en el módulo." 
-                                : "Se recomienda revisar los parámetros de entrada."}
+                                ? (isEnglish ? 'The case meets the hydraulic criteria considered in the module.' : 'El caso cumple los criterios hidráulicos considerados en el módulo.')
+                                : (isEnglish ? 'It is recommended to review the input parameters.' : 'Se recomienda revisar los parámetros de entrada.')}
                         </p>
                     </div>
                 </div>
@@ -217,9 +218,9 @@ export default function Problem3() {
             <div className="bg-white p-6 rounded-2xl border border-slate-100 space-y-4">
                 <h3 className="font-bold text-slate-800 text-xs uppercase tracking-widest text-slate-400 border-b pb-2">{t.common.resultsCharts}</h3>
                 <div className="text-sm text-slate-600 space-y-2">
-                    <p className="flex justify-between"><span>Radio Hidráulico (Rh,ll):</span> <span className="font-mono">{(solution.full?.radiusHydraulicFull || 0).toFixed(3)} m</span></p>
-                    <p className="flex justify-between"><span>Área Lleno (S,ll):</span> <span className="font-mono">{(solution.full?.areaFull || 0).toFixed(3)} m²</span></p>
-                    <p className="flex justify-between"><span>Velocidad Llena (Vll):</span> <span className="font-mono">{(solution.full?.vFull || 0).toFixed(3)} m/s</span></p>
+                    <p className="flex justify-between"><span>{isEnglish ? 'Hydraulic Radius' : 'Radio Hidráulico'} (Rh,ll):</span> <span className="font-mono">{(solution.full?.radiusHydraulicFull || 0).toFixed(3)} m</span></p>
+                    <p className="flex justify-between"><span>{isEnglish ? 'Full Area' : 'Área Lleno'} (S,ll):</span> <span className="font-mono">{(solution.full?.areaFull || 0).toFixed(3)} m²</span></p>
+                    <p className="flex justify-between"><span>{isEnglish ? 'Full Velocity' : 'Velocidad Llena'} (Vll):</span> <span className="font-mono">{(solution.full?.vFull || 0).toFixed(3)} m/s</span></p>
                 </div>
             </div>
             <div className="md:col-span-12">
@@ -236,39 +237,46 @@ export default function Problem3() {
 
       <ProblemSolution steps={[
         {
-          title: "1. Cálculo de Caudales",
-          description: "Determinamos las demandas hidráulicas basándonos en la población servida, dotación de agua y aportación de pluviales.",
+          title: isEnglish ? "1. Flow Calculation" : "1. Cálculo de Caudales",
+          description: isEnglish 
+            ? "We determine the hydraulic demands based on the population served, water supply dotation, and stormwater contribution."
+            : "Determinamos las demandas hidráulicas basándonas en la población servida, dotación de agua y aportación de pluviales.",
           formula: "Q_p = (Pop · Dot · Cret / 86400) · Cp",
-          calcLabel: "Cálculo de Caudal de Diseño",
+          calcLabel: isEnglish ? "Design Flow Calculation" : "Cálculo de Caudal de Diseño",
           calculation: `Q_p = (${params.population} · ${params.dotation} · ${params.c_retorno} / 86400) · ${params.cp} + ${params.q_pluviales_ls}/1000`,
-          result: `${(solution.q_max_total_m3 || 0).toFixed(3)} m³/s (${(solution.q_p_ls || 0).toFixed(2)} l/s residuales)`
+          result: `${(solution.q_max_total_m3 || 0).toFixed(3)} m³/s (${(solution.q_p_ls || 0).toFixed(2)} l/s ${isEnglish ? 'wastewater' : 'residuales'})`
         },
         {
-          title: "2. Parámetros de la Sección Ovoide",
-          description: `Para un ovoide de altura H=${params.selected_height_cm}cm, calculamos sus propiedades geométricas y capacidad máxima mediante Manning.`,
+          title: isEnglish ? "2. Ovoid Section Parameters" : "2. Parámetros de la Sección Ovoide",
+          description: isEnglish
+            ? `For an ovoid of height H=${params.selected_height_cm}cm, we calculate its geometric properties and maximum capacity using Manning.`
+            : `Para un ovoide de altura H=${params.selected_height_cm}cm, calculamos sus propiedades geométricas y capacidad máxima mediante Manning.`,
           formula: "Q_ll = (1/n) · A · Rh^(2/3) · J^(1/2)",
-          calcLabel: "Cálculo de Capacidad Máxima",
+          calcLabel: isEnglish ? "Maximum Capacity Calculation" : "Cálculo de Capacidad Máxima",
           calculation: `Q_ll = (1/${params.n}) · ${(solution.full?.areaFull || 0).toFixed(3)} · ${(solution.full?.radiusHydraulicFull || 0).toFixed(3)}^(2/3) · ${params.j}^(1/2)`,
           result: `${(solution.full?.qFull || 0).toFixed(3)} m³/s | V_ll: ${(solution.full?.vFull || 0).toFixed(2)} m/s`
         },
         {
-          title: "3. Obtención de Razones Hidráulicas",
-          description: "La razón q = Q/Qll nos permite entrar en las gráficas o tablas de Thormann-Franke específicas para secciones ovoides.",
+          title: isEnglish ? "3. Obtaining Hydraulic Ratios" : "3. Obtención de Razones Hidráulicas",
+          description: isEnglish
+            ? "The ratio q = Q/Qll allows us to enter specific Thormann-Franke charts or tables for ovoid sections."
+            : "La razón q = Q/Qll nos permite entrar en las gráficas o tablas de Thormann-Franke específicas para secciones ovoides.",
           formula: "q = Q_total / Q_ll",
-          calcLabel: "Interpolación Ovoidal",
+          calcLabel: isEnglish ? "Ovoid Interpolation" : "Interpolación Ovoidal",
           calculation: `q = ${(solution.q_max_total_m3 || 0).toFixed(3)} / ${(solution.full?.qFull || 0).toFixed(3)} = ${(solution.qRatio || 0).toFixed(3)}`,
           result: `y/H = ${(solution.yOverD || 0).toFixed(3)} | v/vll = ${(solution.vMax / (solution.full?.vFull || 1)).toFixed(3)}`
         },
         {
-          title: "4. Comprobación de Resultados",
-          description: "Calculamos los valores reales de velocidad y calado para verificar el cumplimiento de la normativa vigente: Velocidad entre 0.6 y 5.0 m/s y grado de llenado y/H inferior a 0.8.",
+          title: isEnglish ? "4. Results Verification" : "4. Comprobación de Resultados",
+          description: isEnglish
+            ? "We calculate the real values of velocity and depth to verify compliance with current regulations: Velocity between 0.6 and 5.0 m/s and y/H filling degree less than 0.8."
+            : "Calculamos los valores reales de velocidad y calado para verificar el cumplimiento de la normativa vigente: Velocidad entre 0.6 y 5.0 m/s y grado de llenado y/H inferior a 0.8.",
           formula: "v = (v/vll) · vll | y = (y/H) · H",
-          calcLabel: "Valores en Régimen Real",
+          calcLabel: isEnglish ? "Real Regime Values" : "Valores en Régimen Real",
           calculation: `v_min = ${(solution.vMin || 0).toFixed(2)} | v_punta = ${(solution.vP || 0).toFixed(2)} | v_max = ${(solution.vMax || 0).toFixed(2)}`,
           result: `v_max = ${(solution.vMax || 0).toFixed(2)} m/s | y/H = ${(solution.yOverD || 0).toFixed(3)}`
         }
       ]} />
     </div>
-
   );
 }
