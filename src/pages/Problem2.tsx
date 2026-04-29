@@ -6,7 +6,8 @@ import { ProblemSolution } from '../components/ProblemSolution';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem2() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isEnglish = language === 'en';
   const [data, setData] = useState({
     q_med_actual: 0.05,
     q_min_actual: 0.02,
@@ -59,7 +60,7 @@ export default function Problem2() {
           {t.common.practicalModule}
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p2}</h1>
-        <p className="text-slate-600 mt-2">Evaluación de un colector urbano en situación actual y horizonte de diseño.</p>
+        <p className="text-slate-600 mt-2">{isEnglish ? 'Evaluation of an urban collector in current and design horizon situations.' : 'Evaluación de un colector urbano en situación actual y horizonte de diseño.'}</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
@@ -74,27 +75,27 @@ export default function Problem2() {
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
-            <h2 className="text-lg font-bold text-slate-800 border-b pb-4">{t.common.inputData}: Caudales de Diseño (m³/s)</h2>
+            <h2 className="text-lg font-bold text-slate-800 border-b pb-4">{t.common.inputData}: {isEnglish ? 'Design Flows (m³/s)' : 'Caudales de Diseño (m³/s)'}</h2>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
-                <p className="text-xs font-black text-blue-600 uppercase">Situación actual</p>
+                <p className="text-xs font-black text-blue-600 uppercase">{isEnglish ? 'Current situation' : 'Situación actual'}</p>
                 <div className="space-y-2">
-                  <label className="text-[10px] text-slate-400 uppercase">Q Medio</label>
+                  <label className="text-[10px] text-slate-400 uppercase">{isEnglish ? 'Mean Flow' : 'Q Medio'}</label>
                   <input type="number" step="0.01" value={data.q_med_actual} onChange={e => setData({...data, q_med_actual: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] text-slate-400 uppercase">Q Mínimo</label>
+                  <label className="text-[10px] text-slate-400 uppercase">{isEnglish ? 'Minimum Flow' : 'Q Mínimo'}</label>
                   <input type="number" step="0.01" value={data.q_min_actual} onChange={e => setData({...data, q_min_actual: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
                 </div>
               </div>
               <div className="space-y-4">
-                <p className="text-xs font-black text-indigo-600 uppercase">Horizonte de diseño (+25 años)</p>
+                <p className="text-xs font-black text-indigo-600 uppercase">{isEnglish ? 'Design horizon (+25 years)' : 'Horizonte de diseño (+25 años)'}</p>
                 <div className="space-y-2">
-                  <label className="text-[10px] text-slate-400 uppercase">Q Punta (Qp)</label>
+                  <label className="text-[10px] text-slate-400 uppercase">{isEnglish ? 'Peak Flow (Qp)' : 'Q Punta (Qp)'}</label>
                   <input type="number" step="0.01" value={data.q_p_25} onChange={e => setData({...data, q_p_25: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] text-slate-400 uppercase">Q Pluviales (Qpl)</label>
+                  <label className="text-[10px] text-slate-400 uppercase">{isEnglish ? 'Stormwater Flow (Qpl)' : 'Q Pluviales (Qpl)'}</label>
                   <input type="number" step="0.01" value={data.q_pl_25} onChange={e => setData({...data, q_pl_25: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
                 </div>
               </div>
@@ -102,14 +103,14 @@ export default function Problem2() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Parámetros del Colector</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: {isEnglish ? 'Sewer Parameters' : 'Parámetros del Colector'}</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] text-slate-400 uppercase">Diámetro (mm)</label>
+                <label className="text-[10px] text-slate-400 uppercase">{isEnglish ? 'Diameter (mm)' : 'Diámetro (mm)'}</label>
                 <input type="number" value={data.diameter_mm} onChange={e => setData({...data, diameter_mm: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] text-slate-400 uppercase">Pendiente (j)</label>
+                <label className="text-[10px] text-slate-400 uppercase">{isEnglish ? 'Slope (j)' : 'Pendiente (j)'}</label>
                 <input type="number" step="0.001" value={data.j} onChange={e => setData({...data, j: Number(e.target.value)})} className="w-full text-sm font-bold p-2 bg-slate-50 border rounded" />
               </div>
             </div>
@@ -123,7 +124,7 @@ export default function Problem2() {
             <div className="space-y-6">
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Caudal mínimo actual</span>
+                    <span>{isEnglish ? 'Current minimum flow' : 'Caudal mínimo actual'}</span>
                     <span className={(solution.vMin || 0) >= 0.6 ? 'text-green-600' : 'text-orange-600'}>{(solution.vMin || 0).toFixed(2)} / 0.60 m/s</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -133,7 +134,7 @@ export default function Problem2() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Caudal punta futuro</span>
+                    <span>{isEnglish ? 'Future peak flow' : 'Caudal punta futuro'}</span>
                     <span className={(solution.vP || 0) <= 3.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.vP || 0).toFixed(2)} / 3.00 m/s</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -143,7 +144,7 @@ export default function Problem2() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Caudal total futuro</span>
+                    <span>{isEnglish ? 'Future total flow' : 'Caudal total futuro'}</span>
                     <span className={(solution.vMax || 0) <= 5.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.vMax || 0).toFixed(2)} / 5.00 m/s</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -153,7 +154,7 @@ export default function Problem2() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase text-slate-500">
-                    <span>Llenado máximo (Qtotal)</span>
+                    <span>{isEnglish ? 'Maximum filling (Qtotal)' : 'Llenado máximo (Qtotal)'}</span>
                     <span className={(solution.yOverDMax || 0) <= 1.0 ? 'text-blue-600' : 'text-orange-600'}>{(solution.yOverDMax || 0).toFixed(3)} / 1.00</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -177,33 +178,41 @@ export default function Problem2() {
 
       <ProblemSolution steps={[
         {
-          title: "1. Caudal de Diseño Total",
-          description: "Se estima la carga máxima del sistema sumando el caudal punta de aguas negras en el horizonte de 25 años y el caudal de pluviales de diseño.",
+          title: isEnglish ? "1. Total Design Flow" : "1. Caudal de Diseño Total",
+          description: isEnglish
+            ? "The system peak load is estimated by summing the peak wastewater flow at the 25-year horizon and the design stormwater flow."
+            : "Se estima la carga máxima del sistema sumando el caudal punta de aguas negras en el horizonte de 25 años y el caudal de pluviales de diseño.",
           formula: "Q_max = Q_p(25) + Q_pl(25)",
-          calcLabel: "Cálculo de Caudal Total",
+          calcLabel: isEnglish ? "Total Flow Calculation" : "Cálculo de Caudal Total",
           calculation: `${(data.q_p_25 || 0).toFixed(2)} + ${(data.q_pl_25 || 0).toFixed(2)}`,
           result: `${(solution.q_max_total || 0).toFixed(2)} m³/s`
         },
         {
-          title: "2. Verificación de la Sección Llena",
-          description: "Calculamos las capacidades del colector a sección completa (D=1000mm, n=0.0137) mediante la ecuación de Manning.",
-          formula: "Q_ll = (1/n) · A · Rh^(2/3) · J^(1/2) | V_ll = Q_ll / A",
-          calcLabel: "Cálculo de Capacidad Teórica",
+          title: isEnglish ? "2. Full Section Verification" : "2. Verificación de la Sección Llena",
+          description: isEnglish
+            ? "We calculate the sewer capacities at full section (D=1000mm, n=0.0137) using the Manning equation."
+            : "Calculamos las capacidades del colector a sección completa (D=1000mm, n=0.0137) mediante la ecuación de Manning.",
+          formula: "Q_ll = (1/n) · areaFull · radiusHydraulicFull^(2/3) · J^(1/2) | V_ll = Q_ll / areaFull",
+          calcLabel: isEnglish ? "Theoretical Capacity Calculation" : "Cálculo de Capacidad Teórica",
           calculation: `Q_ll = (1/${data.n}) · 0.785 · 0.25^(2/3) · ${data.j}^(1/2)`,
           result: `${(solution.full?.qFull || 0).toFixed(3)} m³/s | ${(solution.full?.vFull || 0).toFixed(2)} m/s`
         },
         {
-          title: "3. Razones Hidráulicas",
-          description: "Determinamos las razones de caudal para buscar en las tablas de Thormann-Franke los coeficientes de velocidad (v/vll) y calado (y/D).",
+          title: isEnglish ? "3. Hydraulic Ratios" : "3. Razones Hidráulicas",
+          description: isEnglish
+            ? "We determine the flow ratios to look up the velocity (v/vll) and depth (y/D) coefficients in the Thormann-Franke tables."
+            : "Determinamos las razones de caudal para buscar en las tablas de Thormann-Franke los coeficientes de velocidad (v/vll) y calado (y/D).",
           formula: "q = Q / Q_ll",
-          calcLabel: "Búsqueda en Tablas",
+          calcLabel: isEnglish ? "Tables Lookup" : "Búsqueda en Tablas",
           calculation: `q_max = ${(solution.q_max_total || 0).toFixed(3)} / ${(solution.full?.qFull || 0).toFixed(3)} = ${(solution.qRatioMax || 0).toFixed(3)}`,
           result: `y/D_max = ${(solution.yOverDMax || 0).toFixed(3)} | v/vll_max = ${(solution.vMax / (solution.full?.vFull || 1)).toFixed(3)}`
         },
         {
-          title: "4. Evaluación de Velocidades y Calados",
-          description: "Se verifican los condicionantes de diseño: Autolimpieza en tiempo seco mínimo (v > 0.6 m/s), velocidad máxima para evitar erosión (v < 5.0 m/s) y grado de llenado máximo (y/D < 0.8 en unitarios, aunque aquí se admite 1.0 en extremos pluviales).",
-          calcLabel: "Chequeo Normativo",
+          title: isEnglish ? "4. Evaluation of Velocities and Depths" : "4. Evaluación de Velocidades y Calados",
+          description: isEnglish
+            ? "Design constraints are verified: Self-cleansing during minimum dry weather (v > 0.6 m/s), maximum velocity to avoid erosion (v < 5.0 m/s), and maximum filling degree (y/D < 0.8 for combined sewers, though 1.0 is allowed in stormwater extremes here)."
+            : "Se verifican los condicionantes de diseño: Autolimpieza en tiempo seco mínimo (v > 0.6 m/s), velocidad máxima para evitar erosión (v < 5.0 m/s) y grado de llenado máximo (y/D < 0.8 en unitarios, aunque aquí se admite 1.0 en extremos pluviales).",
+          calcLabel: isEnglish ? "Regulatory Check" : "Chequeo Normativo",
           calculation: `v_min = ${(solution.vMin / (solution.full?.vFull || 1)).toFixed(3)} · ${(solution.full?.vFull || 0).toFixed(2)} | y/D_max = ${(solution.yOverDMax || 0).toFixed(3)}`,
           result: `v_min: ${(solution.vMin || 0).toFixed(2)} m/s | v_max: ${(solution.vMax || 0).toFixed(2)} m/s | y/D: ${(solution.yOverDMax || 0).toFixed(2)}`
         }
