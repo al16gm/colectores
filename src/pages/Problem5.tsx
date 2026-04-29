@@ -6,7 +6,8 @@ import HydraulicChart from '../components/HydraulicChart';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem5() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isEnglish = language === 'en';
   const [data, setData] = useState({
     q_max: 3.86,
     q_punta_negras: 0.185,
@@ -17,7 +18,7 @@ export default function Problem5() {
   });
 
   const solution = useMemo(() => {
-    // a. Q que recoge la tubería tras la dilución
+    // Q that continues to WWTP after dilution
     const qs = data.dilution_coef * data.q_punta_negras;
     const q_aliviado = data.q_max - qs;
     
@@ -30,7 +31,7 @@ export default function Problem5() {
     
     const ratioS = qs / (full.qFull || 1);
     const tfS = interpolateThormannFrankeByQ(ratioS);
-    const vS = tfS.vOverVllu * full.vFull;
+    const vMax = tfS.vOverVllu * full.vFull;
     const yOverDS = tfS.yOverD;
 
     const ratioMin = data.q_min_negras / (full.qFull || 1);
@@ -48,10 +49,10 @@ export default function Problem5() {
       d_comercial,
       L,
       h,
-      vS,
+      vMax,
       vMin,
       yOverDS,
-      isValid: vMin >= 0.3 && vS <= 3 && yOverDS <= 0.8
+      isValid: vMin >= 0.3 && vMax <= 3 && yOverDS <= 0.8
     };
   }, [data]);
 
@@ -63,7 +64,7 @@ export default function Problem5() {
           {t.common.practicalModule}
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p5}</h1>
-        <p className="text-slate-600 mt-2">Cálculo hidráulico de un vertedero o aliviadero en una red de saneamiento.</p>
+        <p className="text-slate-600 mt-2">{isEnglish ? 'Hydraulic calculation of a weir or spillway in a sewer network.' : 'Cálculo hidráulico de un vertedero o aliviadero en una red de saneamiento.'}</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
@@ -78,22 +79,22 @@ export default function Problem5() {
       <div className="grid lg:grid-cols-2 gap-8">
         <section className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: Caudales de Entrada</h2>
+            <h2 className="text-lg font-bold text-slate-800">{t.common.inputData}: {isEnglish ? 'Inlet Flows' : 'Caudales de Entrada'}</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">Q Máximo (m³/s)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Max flow (m³/s)' : 'Q Máximo (m³/s)'}</label>
                 <input type="number" step="0.01" value={data.q_max} onChange={e => setData({...data, q_max: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">Q Punta Negras (m³/s)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Peak wastewater flow (m³/s)' : 'Q Punta Negras (m³/s)'}</label>
                 <input type="number" step="0.001" value={data.q_punta_negras} onChange={e => setData({...data, q_punta_negras: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">Coef. Dilución</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Dilution Coeff.' : 'Coef. Dilución'}</label>
                 <input type="number" value={data.dilution_coef} onChange={e => setData({...data, dilution_coef: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-500 uppercase">Pendiente J</label>
+                <label className="text-xs font-bold text-slate-500 uppercase">{t.labels.slopeJ}</label>
                 <input type="number" step="0.001" value={data.j} onChange={e => setData({...data, j: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
               </div>
             </div>
@@ -102,10 +103,12 @@ export default function Problem5() {
           <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm">
              <div className="flex items-center gap-3 text-blue-700 mb-4">
                 <Info className="w-5 h-5" />
-                <h3 className="font-bold uppercase text-xs tracking-wider">Criterio de Dilución</h3>
+                <h3 className="font-bold uppercase text-xs tracking-wider">{isEnglish ? 'Dilution Criteria' : 'Criterio de Dilución'}</h3>
              </div>
              <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                Se establece que el caudal que continúa hacia la EDAR (Q<sub>s</sub>) debe ser {data.dilution_coef} veces el caudal punta de aguas negras, limitando el vertido de contaminantes al medio receptor.
+                {isEnglish 
+                  ? `It is established that the flow continuing to the WWTP (Qs) must be ${data.dilution_coef} times the peak wastewater flow, limiting the discharge of pollutants to the receiving medium.`
+                  : `Se establece que el caudal que continúa hacia la EDAR (Qs) debe ser ${data.dilution_coef} veces el caudal punta de aguas negras, limitando el vertido de contaminantes al medio receptor.`}
              </p>
           </div>
         </section>
@@ -117,49 +120,49 @@ export default function Problem5() {
             <div className="space-y-8">
                <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                    <p className="text-[10px] uppercase text-white/40 font-bold mb-2">Q Salida (EDAR)</p>
+                    <p className="text-[10px] uppercase text-white/40 font-bold mb-2">{isEnglish ? 'Outlet Flow (WWTP)' : 'Q Salida (EDAR)'}</p>
                     <p className="text-2xl font-black">{(solution.qs || 0).toFixed(3)} <span className="text-xs font-normal opacity-50">m³/s</span></p>
                   </div>
                   <div className="bg-indigo-500/20 p-4 rounded-2xl border border-indigo-500/30">
-                    <p className="text-[10px] uppercase text-indigo-300 font-bold mb-2">Q Vertido (Medio)</p>
+                    <p className="text-[10px] uppercase text-indigo-300 font-bold mb-2">{isEnglish ? 'Spillway Flow (Env)' : 'Q Vertido (Medio)'}</p>
                     <p className="text-2xl font-black">{(solution.q_aliviado || 0).toFixed(3)} <span className="text-xs font-normal opacity-50">m³/s</span></p>
                   </div>
                </div>
 
                <div className="space-y-4">
-                  <p className="text-xs font-bold text-white/60 uppercase">Estructura del Vertedero</p>
+                  <p className="text-xs font-bold text-white/60 uppercase">{isEnglish ? 'Weir Structure' : 'Estructura del Vertedero'}</p>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-4 bg-white/5 rounded-xl border border-white/10">
-                       <p className="text-[9px] uppercase font-bold text-white/30">Longitud L</p>
+                       <p className="text-[9px] uppercase font-bold text-white/30">{isEnglish ? 'Length L' : 'Longitud L'}</p>
                        <p className="text-xl font-bold text-blue-400">{(solution.L || 0).toFixed(2)} m</p>
                     </div>
                     <div className="text-center p-4 bg-white/5 rounded-xl border border-white/10">
-                       <p className="text-[9px] uppercase font-bold text-white/30">Carga h</p>
+                       <p className="text-[9px] uppercase font-bold text-white/30">{isEnglish ? 'Head h' : 'Carga h'}</p>
                        <p className="text-xl font-bold text-blue-400">{(solution.h || 0).toFixed(2)} m</p>
                     </div>
                   </div>
                </div>
                
                <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                  <p className="text-xs text-emerald-400 font-bold mb-1 uppercase tracking-tighter">Colector Recogida Recomendado</p>
+                  <p className="text-xs text-emerald-400 font-bold mb-1 uppercase tracking-tighter">{isEnglish ? 'Recommended Collection Pipe' : 'Colector Recogida Recomendado'}</p>
                   <p className="text-lg font-black italic">D = {(solution.d_comercial * 1000).toFixed(0)} mm</p>
                   <div className="mt-4 grid grid-cols-2 gap-2 text-[10px]">
                     <div className="bg-white/5 p-2 rounded border border-white/10">
-                      <p className="text-white/40">v_min (Residual)</p>
+                      <p className="text-white/40">{isEnglish ? 'v_min (Residual)' : 'v_min (Residual)'}</p>
                       <p className={solution.vMin >= 0.3 ? "text-green-400 font-bold" : "text-orange-400 font-bold"}>{(solution.vMin || 0).toFixed(2)} m/s</p>
                     </div>
                     <div className="bg-white/5 p-2 rounded border border-white/10">
-                      <p className="text-white/40">v_max (Q_salida)</p>
-                      <p className={solution.vS <= 3.0 ? "text-blue-400 font-bold" : "text-orange-400 font-bold"}>{(solution.vS || 0).toFixed(2)} m/s</p>
+                      <p className="text-white/40">{isEnglish ? 'v_max (Outlet)' : 'v_max (Q_salida)'}</p>
+                      <p className={solution.vMax <= 3.0 ? "text-blue-400 font-bold" : "text-orange-400 font-bold"}>{(solution.vMax || 0).toFixed(2)} m/s</p>
                     </div>
                   </div>
                </div>
 
                 <div className="space-y-4 border-t border-white/10 pt-6">
-                  <p className="text-[10px] font-bold text-white/40 uppercase tracking_widest">{t.common.resultsCharts}</p>
+                  <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{t.common.resultsCharts}</p>
                   <HydraulicChart 
                      currentYOverD={solution.yOverDS}
-                     currentQOverQllu={solution.qs / (calculateCircularManning({n: data.n, j: data.j, d: solution.d_comercial}).qFull || 1)}
+                     currentQOverQllu={solution.qs / (calculateCircularManning({n: data.n, j: data.j, d: data.d_comercial}).qFull || 1)}
                   />
                 </div>
             </div>
@@ -169,39 +172,46 @@ export default function Problem5() {
 
       <ProblemSolution steps={[
         {
-          title: "1. Caudal de Salida (Dilución)",
-          description: "Calculamos el caudal máximo que puede continuar aguas abajo tras la dilución por lluvia.",
+          title: isEnglish ? "1. Outlet Flow (Dilution)" : "1. Caudal de Salida (Dilución)",
+          description: isEnglish
+            ? "We calculate the maximum flow that can continue downstream after dilution by rain."
+            : "Calculamos el caudal máximo que puede continuar aguas abajo tras la dilución por lluvia.",
           formula: "Qs = n_dil · Q_punta",
-          calcLabel: "Control de Carga EDAR",
+          calcLabel: isEnglish ? "WWTP Load Control" : "Control de Carga EDAR",
           calculation: `${data.dilution_coef || 0} · ${data.q_punta_negras || 0}`,
           result: `${(solution.qs || 0).toFixed(3)} m³/s`
         },
         {
-          title: "2. Caudal de Alivio (Vertido)",
-          description: "La diferencia entre el caudal de llegada total y el de salida es la que debe ser evacuada por el vertedero lateral.",
+          title: isEnglish ? "2. Spillway Flow (Discharge)" : "2. Caudal de Alivio (Vertido)",
+          description: isEnglish
+            ? "The difference between total inlet flow and outlet flow must be evacuated by the lateral weir."
+            : "La diferencia entre el caudal de llegada total y el de salida es la que debe ser evacuada por el vertedero lateral.",
           formula: "Qv = Q_llegada - Q_salida",
-          calcLabel: "Carga de Alivio",
+          calcLabel: isEnglish ? "Relief Load" : "Carga de Alivio",
           calculation: `${data.q_max || 0} - ${(solution.qs || 0).toFixed(3)}`,
           result: `${(solution.q_aliviado || 0).toFixed(3)} m³/s`
         },
         {
-          title: "3. Longitud del Vertedero Lateral",
-          description: "Dimensionamos la longitud de la cresta del vertedero bajo una carga de diseño h.",
+          title: isEnglish ? "3. Lateral Weir Length" : "3. Longitud del Vertedero Lateral",
+          description: isEnglish
+            ? "We dimension the length of the weir crest under a design head h."
+            : "Dimensionamos la longitud de la cresta del vertedero bajo una carga de diseño h.",
           formula: "L = Qv / (0.4 · sqrt(2g) · h^1.5)",
-          calcLabel: "Geometría Hidráulica",
+          calcLabel: isEnglish ? "Hydraulic Geometry" : "Geometría Hidráulica",
           calculation: `${(solution.q_aliviado || 0).toFixed(3)} / (0.4 · 4.43 · ${(solution.h || 0).toFixed(2)}^1.5)`,
           result: `L = ${(solution.L || 0).toFixed(2)} m`
         },
         {
-          title: "4. Diámetro del Colector de Salida",
-          description: "Seleccionamos el diámetro comercial necesario para evacuar el caudal diluido a sección llena.",
+          title: isEnglish ? "4. Outlet Collector Diameter" : "4. Diámetro del Colector de Salida",
+          description: isEnglish
+            ? "We select the commercial diameter necessary to evacuate the diluted flow at full section."
+            : "Seleccionamos el diámetro comercial necesario para evacuar el caudal diluido a sección llena.",
           formula: "D = (Qll · n / (0.312 · J^0.5))^0.375",
-          calcLabel: "Selección de Tubería",
-          calculation: `Calculado para Qs = ${(solution.qs || 0).toFixed(3)} m³/s`,
-          result: `D >= ${(solution.d_required * 1000 || 0).toFixed(0)} mm -> Seleccionado: ${(solution.d_comercial * 1000).toFixed(0)} mm`
+          calcLabel: isEnglish ? "Pipe Selection" : "Selección de Tubería",
+          calculation: `Calculado for Qs = ${(solution.qs || 0).toFixed(3)} m³/s`,
+          result: `D >= ${(solution.d_required * 1000 || 0).toFixed(0)} mm -> ${isEnglish ? 'Selected' : 'Seleccionado'}: ${(solution.d_comercial * 1000).toFixed(0)} mm`
         }
       ]} />
     </div>
-
   );
 }
