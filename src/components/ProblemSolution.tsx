@@ -31,58 +31,73 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({ steps }) => {
         <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
           <Calculator size={20} />
         </div>
+
         <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">
           {t.common.stepByStep}
         </h3>
       </div>
 
       <div className="p-6 space-y-6">
-        {steps.map((step, index) => (
-          <div key={`${step.title}-${index}`} className="relative pl-10">
-            {index < steps.length - 1 && (
-              <div className="absolute left-[15px] top-8 bottom-[-24px] w-px bg-slate-200" />
-            )}
-            <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
-              {index + 1}
-            </div>
+        {steps.map((step, index) => {
+          const calculationLabel = step.calcLabel || t.common.calculation;
 
-            <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-              <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                {step.title}
-                {index < steps.length - 1 && <ArrowRight size={14} className="text-slate-400" />}
-              </h4>
-              <p className="text-sm text-slate-600 leading-relaxed mb-3">
-                {step.description}
-              </p>
-
-              {step.formula && (
-                <div className="bg-white rounded-lg border border-slate-200 p-3 mb-3 font-mono text-xs text-slate-700 overflow-x-auto">
-                  <span className="text-blue-600 font-bold">{t.common.formula}</span> {step.formula}
-                </div>
+          return (
+            <div key={`${step.title}-${index}`} className="relative pl-10">
+              {index < steps.length - 1 && (
+                <div className="absolute left-[15px] top-8 bottom-[-24px] w-px bg-slate-200" />
               )}
 
-              {step.calculation && (
-                <div className="bg-blue-50/60 rounded-lg border border-blue-100 p-3 font-mono text-xs text-blue-900 overflow-x-auto">
-                  <span className="font-bold">{step.calcLabel ? `${step.calcLabel}:` : t.common.calculation}</span>{' '}
-                  {step.calculation}
-                  {step.result && (
-                    <span className="block mt-2 text-blue-700 font-black">{step.result}</span>
+              <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                {index + 1}
+              </div>
+
+              <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                  {step.title}
+                  {index < steps.length - 1 && (
+                    <ArrowRight size={14} className="text-slate-400" />
                   )}
-                </div>
-              )}
+                </h4>
 
-              {!step.calculation && step.result && (
-                <div className="bg-blue-50/60 rounded-lg border border-blue-100 p-3 font-mono text-xs text-blue-900 overflow-x-auto">
-                  <span className="font-bold">{t.common.result}</span> {step.result}
-                </div>
-              )}
+                <p className="text-sm text-slate-600 leading-relaxed mb-3">
+                  {step.description}
+                </p>
+
+                {step.formula && (
+                  <div className="bg-white rounded-lg border border-slate-200 p-3 mb-3 font-mono text-xs text-slate-700 overflow-x-auto">
+                    <span className="text-blue-600 font-bold">{t.common.formula}</span>{' '}
+                    {step.formula}
+                  </div>
+                )}
+
+                {step.calculation && (
+                  <div className="bg-blue-50/60 rounded-lg border border-blue-100 p-3 font-mono text-xs text-blue-900 overflow-x-auto">
+                    <span className="font-bold">{calculationLabel}:</span>{' '}
+                    {step.calculation}
+
+                    {step.result && (
+                      <span className="block mt-2 text-blue-700 font-black">
+                        {step.result}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {!step.calculation && step.result && (
+                  <div className="bg-blue-50/60 rounded-lg border border-blue-100 p-3 font-mono text-xs text-blue-900 overflow-x-auto">
+                    <span className="font-bold">{t.common.result}</span>{' '}
+                    {step.result}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-start gap-3 text-xs text-slate-500">
         <Info size={16} className="mt-0.5 shrink-0" />
+
         <p>
           <span className="font-bold text-slate-700">{t.common.teachingNote}</span>{' '}
           {t.common.interpolationNote}
