@@ -6,7 +6,8 @@ import HydraulicChart from '../components/HydraulicChart';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Problem7() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isEnglish = language === 'en';
   const [zoneA, setZoneA] = useState({
       width: 300,
       length: 1500,
@@ -32,33 +33,33 @@ export default function Problem7() {
   });
 
   const solution = useMemo(() => {
-    // Superficicies
+    // Surfaces
     const sa_ha = (zoneA.width * zoneA.length) / 10000;
     const sb_ha = (zoneB.width * zoneB.length) / 10000;
 
-    // Poblaciones
+    // Populations
     const pa = sa_ha * zoneA.density;
     const pb = sb_ha * zoneB.density;
 
-    // Caudales Medios
+    // Mean Flows
     const qa_med = (pa * common.dotation * common.c_retorno) / (24 * 3600);
     const qb_med = (pb * common.dotation * common.c_retorno) / (24 * 3600);
     const q_med_total = qa_med + qb_med;
 
-    // Caudales Punta
+    // Peak Flows
     const qa_p = qa_med * common.cp;
     const qb_p = qb_med * common.cp;
     const q_p_total = qa_p + qb_p;
 
-    // Caudales Min
+    // Min Flows
     const q_min_total = q_med_total * 0.45;
 
-    // Pluviales
+    // Rainfall
     const qpl_a = 1 * zoneA.ca * common.intensity * sa_ha;
     const qpl_b = 1 * zoneB.ca * common.intensity * sb_ha;
     const qpl_total = qpl_a + qpl_b;
 
-    // Totales en punto C (Total A + Total B)
+    // Totals at point C (Total A + Total B)
     const q_total_seco = q_p_total / 1000;
     const q_total_lluvia = q_total_seco + qpl_total / 1000;
 
@@ -105,7 +106,7 @@ export default function Problem7() {
           {t.common.practicalModule}
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{t.nav.p7}</h1>
-        <p className="text-slate-600 mt-2">Agregación de aportaciones por zonas urbanas y verificación del colector resultante.</p>
+        <p className="text-slate-600 mt-2">{isEnglish ? 'Aggregation of contributions by urban zones and verification of the resulting collector.' : 'Agregación de aportaciones por zonas urbanas y verificación del colector resultante.'}</p>
       </header>
 
       <section className="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
@@ -126,19 +127,19 @@ export default function Problem7() {
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Longitud (m)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Length (m)' : 'Longitud (m)'}</label>
                     <input type="number" value={zoneA.length} onChange={e => setZoneA({...zoneA, length: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Ancho (m)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Width (m)' : 'Ancho (m)'}</label>
                     <input type="number" value={zoneA.width} onChange={e => setZoneA({...zoneA, width: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Densidad (hab/Ha)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Density (inh/Ha)' : 'Densidad (hab/Ha)'}</label>
                     <input type="number" value={zoneA.density} onChange={e => setZoneA({...zoneA, density: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">C. Escorrentía (Ca)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Runoff Coeff. (Ca)' : 'C. Escorrentía (Ca)'}</label>
                     <input type="number" step="0.1" value={zoneA.ca} onChange={e => setZoneA({...zoneA, ca: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
               </div>
@@ -151,19 +152,19 @@ export default function Problem7() {
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Longitud (m)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Length (m)' : 'Longitud (m)'}</label>
                     <input type="number" value={zoneB.length} onChange={e => setZoneB({...zoneB, length: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Ancho (m)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Width (m)' : 'Ancho (m)'}</label>
                     <input type="number" value={zoneB.width} onChange={e => setZoneB({...zoneB, width: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Densidad (hab/Ha)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Density (inh/Ha)' : 'Densidad (hab/Ha)'}</label>
                     <input type="number" value={zoneB.density} onChange={e => setZoneB({...zoneB, density: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">C. Escorrentía (Ca)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Runoff Coeff. (Ca)' : 'C. Escorrentía (Ca)'}</label>
                     <input type="number" step="0.1" value={zoneB.ca} onChange={e => setZoneB({...zoneB, ca: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                 </div>
               </div>
@@ -172,15 +173,15 @@ export default function Problem7() {
            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
                <h3 className="font-bold text-slate-800 flex items-center gap-2">
                  <Calculator className="w-4 h-4 text-slate-500" />
-                 {t.common.inputData}: Colector Final
+                 {t.common.inputData}: {isEnglish ? 'Final Pipe' : 'Colector Final'}
                </h3>
                <div className="grid grid-cols-2 gap-4">
                  <div className="space-y-1">
-                     <label className="text-xs font-bold text-slate-500 uppercase">Diámetro (mm)</label>
+                     <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Diameter (mm)' : 'Diámetro (mm)'}</label>
                      <input type="number" value={common.diameter_mm} onChange={e => setCommon({...common, diameter_mm: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                  </div>
                  <div className="space-y-1">
-                     <label className="text-xs font-bold text-slate-500 uppercase">Pendiente (j)</label>
+                     <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Slope (j)' : 'Pendiente (j)'}</label>
                      <input type="number" step="0.001" value={common.j} onChange={e => setCommon({...common, j: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                  </div>
                </div>
@@ -188,23 +189,23 @@ export default function Problem7() {
 
             <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
                <h3 className="font-bold text-slate-800 flex items-center gap-2 text-sm uppercase tracking-widest text-slate-400">
-                 Datos de entrada: Parámetros Globales
+                 {isEnglish ? 'Global Parameters' : 'Datos de entrada: Parámetros Globales'}
                </h3>
                <div className="grid grid-cols-2 gap-4">
                  <div className="space-y-1">
-                     <label className="text-xs font-bold text-slate-500 uppercase">Dotación (l/h/d)</label>
+                     <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Demand (L/inh·day)' : 'Dotación (l/inh·día)'}</label>
                      <input type="number" value={common.dotation} onChange={e => setCommon({...common, dotation: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                  </div>
                  <div className="space-y-1">
-                     <label className="text-xs font-bold text-slate-500 uppercase">C. Punta (Cp)</label>
+                     <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Peak Coeff.' : 'C. Punta (Cp)'}</label>
                      <input type="number" step="0.1" value={common.cp} onChange={e => setCommon({...common, cp: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                  </div>
                  <div className="space-y-1">
-                     <label className="text-xs font-bold text-slate-500 uppercase">C. Retorno</label>
+                     <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Return Coeff.' : 'C. Retorno'}</label>
                      <input type="number" step="0.1" value={common.c_retorno} onChange={e => setCommon({...common, c_retorno: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                  </div>
                  <div className="space-y-1">
-                     <label className="text-xs font-bold text-slate-500 uppercase">Intensidad Pluvial</label>
+                     <label className="text-xs font-bold text-slate-500 uppercase">{isEnglish ? 'Rain Intensity' : 'Intensidad Pluvial'}</label>
                      <input type="number" value={common.intensity} onChange={e => setCommon({...common, intensity: Number(e.target.value)})} className="w-full p-2 bg-slate-50 border rounded-lg text-sm font-bold" />
                  </div>
                </div>
@@ -220,22 +221,22 @@ export default function Problem7() {
                       <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                          <div className="w-8 h-8 rounded-full bg-blue-500"></div>
                       </div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-tighter tracking-widest">Resumen Zona A (Alta)</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-tighter tracking-widest">{isEnglish ? 'Zone A Summary (High)' : 'Resumen Zona A (Alta)'}</p>
                       <div className="space-y-1">
-                        <p className="text-xs text-slate-600 flex justify-between">Habitantes: <span className="font-bold text-slate-900">{(solution.pa || 0).toFixed(0)}</span></p>
-                        <p className="text-xs text-slate-600 flex justify-between">Área: <span className="font-bold text-slate-900">{(solution.sa_ha || 0).toFixed(1)} Ha</span></p>
-                        <p className="text-[11px] text-blue-600 font-black mt-2 pt-2 border-t border-blue-100">{(solution.qa_p || 0).toFixed(2)} l/s punta</p>
+                        <p className="text-xs text-slate-600 flex justify-between">{isEnglish ? 'Inhabitants' : 'Habitantes'}: <span className="font-bold text-slate-900">{(solution.pa || 0).toFixed(0)}</span></p>
+                        <p className="text-xs text-slate-600 flex justify-between">{isEnglish ? 'Area' : 'Área'}: <span className="font-bold text-slate-900">{(solution.sa_ha || 0).toFixed(1)} Ha</span></p>
+                        <p className="text-[11px] text-blue-600 font-black mt-2 pt-2 border-t border-blue-100">{(solution.qa_p || 0).toFixed(2)} l/s {isEnglish ? 'peak' : 'punta'}</p>
                       </div>
                    </div>
                    <div className="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 relative overflow-hidden group">
                       <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                          <div className="w-8 h-8 rounded-full bg-indigo-500"></div>
                       </div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-tighter tracking-widest">Resumen Zona B (Media)</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-tighter tracking-widest">{isEnglish ? 'Zone B Summary (Medium)' : 'Resumen Zona B (Media)'}</p>
                       <div className="space-y-1">
-                        <p className="text-xs text-slate-600 flex justify-between">Habitantes: <span className="font-bold text-slate-900">{(solution.pb || 0).toFixed(0)}</span></p>
-                        <p className="text-xs text-slate-600 flex justify-between">Área: <span className="font-bold text-slate-900">{(solution.sb_ha || 0).toFixed(1)} Ha</span></p>
-                        <p className="text-[11px] text-indigo-600 font-black mt-2 pt-2 border-t border-indigo-100">{(solution.qb_p || 0).toFixed(2)} l/s punta</p>
+                        <p className="text-xs text-slate-600 flex justify-between">{isEnglish ? 'Inhabitants' : 'Habitantes'}: <span className="font-bold text-slate-900">{(solution.pb || 0).toFixed(0)}</span></p>
+                        <p className="text-xs text-slate-600 flex justify-between">{isEnglish ? 'Area' : 'Área'}: <span className="font-bold text-slate-900">{(solution.sb_ha || 0).toFixed(1)} Ha</span></p>
+                        <p className="text-[11px] text-indigo-600 font-black mt-2 pt-2 border-t border-indigo-100">{(solution.qb_p || 0).toFixed(2)} l/s {isEnglish ? 'peak' : 'punta'}</p>
                       </div>
                    </div>
                 </div>
@@ -243,7 +244,7 @@ export default function Problem7() {
                 <div className="space-y-4">
                     <div className="p-5 bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl flex justify-between items-center shadow-lg shadow-blue-200">
                         <div>
-                             <p className="text-[10px] font-black uppercase text-blue-200 tracking-widest mb-1">Total Tiempo Seco (Residual)</p>
+                             <p className="text-[10px] font-black uppercase text-blue-200 tracking-widest mb-1">{isEnglish ? 'Total Dry Weather (Wastewater)' : 'Total Tiempo Seco (Residual)'}</p>
                              <div className="flex items-baseline gap-2">
                                <p className="text-4xl font-black">{(solution.q_total_seco || 0).toFixed(3)}</p>
                                <span className="text-lg opacity-50">m³/s</span>
@@ -254,7 +255,7 @@ export default function Problem7() {
                     <div className="p-5 bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-2xl flex justify-between items-center shadow-2xl relative overflow-hidden group">
                         <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-all"></div>
                         <div className="relative z-10">
-                             <p className="text-[10px] font-black uppercase text-indigo-400 tracking-widest mb-1">Capacidad Hidráulica de Diseño</p>
+                             <p className="text-[10px] font-black uppercase text-indigo-400 tracking-widest mb-1">{isEnglish ? 'Hydraulic Design Capacity' : 'Capacidad Hidráulica de Diseño'}</p>
                              <div className="flex items-baseline gap-2">
                                <p className="text-4xl font-black">{(solution.q_total_lluvia || 0).toFixed(3)}</p>
                                <span className="text-lg opacity-50 text-indigo-300">m³/s</span>
@@ -267,15 +268,15 @@ export default function Problem7() {
                   <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">{t.common.hydraulicChecks}</h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-white rounded-lg border border-slate-100">
-                      <p className="text-[9px] text-slate-400 font-bold uppercase mb-1">v_min (Residual)</p>
+                      <p className="text-[9px] text-slate-400 font-bold uppercase mb-1">{isEnglish ? 'v_min (Residual)' : 'v_min (Residual)'}</p>
                       <p className={`text-sm font-black ${solution.vMin >= 0.3 ? 'text-green-600' : 'text-orange-600'}`}>{(solution.vMin || 0).toFixed(2)} / 0.30 m/s</p>
                     </div>
                     <div className="p-3 bg-white rounded-lg border border-slate-100">
-                      <p className="text-[9px] text-slate-400 font-bold uppercase mb-1">v_max (Pluvial)</p>
+                      <p className="text-[9px] text-slate-400 font-bold uppercase mb-1">{isEnglish ? 'v_max (Pluvial)' : 'v_max (Pluvial)'}</p>
                       <p className={`text-sm font-black ${solution.vMax <= 5.0 ? 'text-blue-600' : 'text-orange-600'}`}>{(solution.vMax || 0).toFixed(2)} / 5.00 m/s</p>
                     </div>
                     <div className="p-3 bg-white rounded-lg border border-slate-100 col-span-2">
-                       <p className="text-[9px] text-slate-400 font-bold uppercase mb-1 text-center">Llenado (y/D)</p>
+                       <p className="text-[9px] text-slate-400 font-bold uppercase mb-1 text-center">{isEnglish ? 'Filling Degree (y/D)' : 'Llenado (y/D)'}</p>
                        <p className={`text-xl font-black text-center ${solution.yOverDTotal <= 0.8 ? 'text-blue-600' : 'text-slate-900'}`}>{(solution.yOverDTotal || 0).toFixed(3)}</p>
                     </div>
                   </div>
@@ -288,7 +289,7 @@ export default function Problem7() {
            </div>
 
            <div className="bg-white p-8 rounded-3xl border border-slate-100 flex flex-col items-center">
-                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-8">Esquema de Convergencia</h4>
+                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-8">{isEnglish ? 'Convergence Scheme' : 'Esquema de Convergencia'}</h4>
                 <div className="flex items-center gap-4 relative">
                    <div className="flex flex-col gap-12">
                       <div className="w-12 h-12 rounded-full border-2 border-blue-500 flex items-center justify-center bg-white shadow-sm font-black text-blue-600 text-xs">Z-A</div>
@@ -304,7 +305,9 @@ export default function Problem7() {
                    <div className="w-20 h-3 bg-gradient-to-r from-slate-900 to-transparent rounded-full shadow-inner"></div>
                 </div>
                 <p className="text-[10px] text-slate-400 mt-8 italic text-center px-8">
-                    El colector final aguas abajo de <b>Punto C</b> debe dimensionarse para <b>{solution.q_total_lluvia.toFixed(3)} m³/s</b>.
+                    {isEnglish 
+                      ? <>The final collector downstream of <b>Point C</b> must be sized for <b>{solution.q_total_lluvia.toFixed(3)} m³/s</b>.</>
+                      : <>El colector final aguas abajo de <b>Punto C</b> debe dimensionarse para <b>{solution.q_total_lluvia.toFixed(3)} m³/s</b>.</>}
                 </p>
            </div>
         </section>
@@ -312,37 +315,44 @@ export default function Problem7() {
 
       <ProblemSolution steps={[
         {
-          title: "1. Cuantificación de Superficies y Población",
-          description: "Calculamos la superficie bruta de cada zona de vertido y su población asociada mediante la densidad habitacional definida para cada sector.",
-          calcLabel: "Balance Zonal",
+          title: isEnglish ? "1. Surfaces and Population Quantification" : "1. Cuantificación de Superficies y Población",
+          description: isEnglish
+            ? "We calculate the gross surface area of each discharge zone and its associated population through the residential density defined for each sector."
+            : "Calculamos la superficie bruta de cada zona de vertido y su población asociada mediante la densidad habitacional definida para cada sector.",
+          calcLabel: isEnglish ? "Zonal Balance" : "Balance Zonal",
           calculation: `Z-A: ${zoneA.width}x${zoneA.length} / 10k = ${(solution.sa_ha || 0).toFixed(1)} Ha | Z-B: ${zoneB.width}x${zoneB.length} / 10k = ${(solution.sb_ha || 0).toFixed(1)} Ha`,
-          result: `Pob. Total: ${(solution.pa + solution.pb).toFixed(0)} habitantes`
+          result: `${isEnglish ? 'Total Pop' : 'Pob. Total'}: ${(solution.pa + solution.pb).toFixed(0)} ${isEnglish ? 'inhabitants' : 'habitantes'}`
         },
         {
-          title: "2. Producción de Aguas Negras (Tiempo Seco)",
-          description: "Determinamos el caudal punta total esperado en el punto de encuentro considerando las aportaciones de dotación y retorno punta de ambos sectores.",
+          title: isEnglish ? "2. Wastewater Production (Dry Weather)" : "2. Producción de Aguas Negras (Tiempo Seco)",
+          description: isEnglish
+            ? "We determine the total peak flow expected at the meeting point considering the water demand and peak return contributions from both sectors."
+            : "Determinamos el caudal punta total esperado en el punto de encuentro considerando las aportaciones de dotación y retorno punta de ambos sectores.",
           formula: "Q_p = (Pop_tot · Dot · Cret / 86400) · C_p",
-          calcLabel: "Demanda Residual Agregada",
+          calcLabel: isEnglish ? "Aggregated Residual Demand" : "Demanda Residual Agregada",
           calculation: `(${(solution.pa || 0).toFixed(0)} + ${(solution.pb || 0).toFixed(0)}) · ${common.dotation || 0} · ${common.c_retorno || 0} / 86400 · ${common.cp || 0}`,
-          result: `${(solution.q_total_seco * 1000 || 0).toFixed(2)} l/s (Aguas Negras)`
+          result: `${(solution.q_total_seco * 1000 || 0).toFixed(2)} l/s (${isEnglish ? 'Wastewater' : 'Aguas Negras'})`
         },
         {
-          title: "3. Respuesta Hidrológica (Tiempo de Lluvia)",
-          description: "Aplicamos el método racional por zonas ante un aguacero de intensidad uniforme en toda la cuenca.",
+          title: isEnglish ? "3. Hydrological Response (Rainy Weather)" : "3. Respuesta Hidrológica (Tiempo de Lluvia)",
+          description: isEnglish
+            ? "We apply the rational method by zones given a uniform intensity storm throughout the basin."
+            : "Utilizamos el método racional por zonas ante un aguacero de intensidad uniforme en toda la cuenca.",
           formula: "Q_pl = (Ca_a · A_a + Ca_b · A_b) · I",
-          calcLabel: "Escorrentía Convergente",
+          calcLabel: isEnglish ? "Converging Runoff" : "Escorrentía Convergente",
           calculation: `(${zoneA.ca || 0} · ${(solution.sa_ha || 0).toFixed(1)}) + (${zoneB.ca || 0} · ${(solution.sb_ha || 0).toFixed(1)}) · ${common.intensity || 0}`,
-          result: `${((solution.qpl_a + solution.qpl_b) || 0).toFixed(2)} l/s (Caudal Pluvial)`
+          result: `${((solution.qpl_a + solution.qpl_b) || 0).toFixed(2)} l/s (${isEnglish ? 'Rain Flow' : 'Caudal Pluvial'})`
         },
         {
-          title: "4. Definición del Nodo de Salida (Punto C)",
-          description: "El colector resultante aguas abajo del punto de unión C se dimensiona para la envolvente de ambos caudales (tiempo seco + lluvia).",
-          calcLabel: "Caudal de Cálculo Final",
+          title: isEnglish ? "4. Outlet Node Definition (Point C)" : "4. Definición del Nodo de Salida (Punto C)",
+          description: isEnglish
+            ? "The resulting collector downstream of the junction point C is sized for the envelope of both flows (dry weather + rain)."
+            : "El colector resultante aguas abajo del punto de unión C se dimensiona para la envolvente de ambos caudales (tiempo seco + lluvia).",
+          calcLabel: isEnglish ? "Final Design Flow" : "Caudal de Cálculo Final",
           calculation: `${(solution.q_total_seco || 0).toFixed(3)} + ${(((solution.qpl_a + solution.qpl_b) / 1000) || 0).toFixed(3)}`,
-          result: `${(solution.q_total_lluvia || 0).toFixed(3)} m³/s (Capacidad Necesaria)`
+          result: `${(solution.q_total_lluvia || 0).toFixed(3)} m³/s (${isEnglish ? 'Required Capacity' : 'Capacidad Necesaria'})`
         }
       ]} />
     </div>
-
   );
 }
