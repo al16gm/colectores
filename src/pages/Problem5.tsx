@@ -162,7 +162,7 @@ export default function Problem5() {
                   <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{t.common.resultsCharts}</p>
                   <HydraulicChart 
                      currentYOverD={solution.yOverDS}
-                     currentQOverQllu={solution.qs / (calculateCircularManning({n: data.n, j: data.j, d: data.d_comercial}).qFull || 1)}
+                     currentQOverQllu={solution.qs / (calculateCircularManning({n: data.n, j: data.j, d: solution.d_comercial}).qFull || 1)}
                   />
                 </div>
             </div>
@@ -208,7 +208,7 @@ export default function Problem5() {
             : "Seleccionamos el diámetro comercial necesario para evacuar el caudal diluido a sección llena.",
           formula: "D = (Qll · n / (0.312 · J^0.5))^0.375",
           calcLabel: isEnglish ? "Pipe Selection" : "Selección de Tubería",
-          calculation: `Calculado for Qs = ${(solution.qs || 0).toFixed(3)} m³/s`,
+          calculation: `${isEnglish ? 'Calculated for' : 'Calculado para'} Qs = ${(solution.qs || 0).toFixed(3)} m³/s`,
           result: `D >= ${(solution.d_required * 1000 || 0).toFixed(0)} mm -> ${isEnglish ? 'Selected' : 'Seleccionado'}: ${(solution.d_comercial * 1000).toFixed(0)} mm`
         }
       ]} />
